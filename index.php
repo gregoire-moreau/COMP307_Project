@@ -19,9 +19,6 @@ $c['errorHandler'] = function ($c) {
 };
 
 $app->get('/', function ($request, $response) {
-    echo 'Hi';
-});
-$app->get('/query', function ($request, $response) {
     include 'index.html';
     return $response;
 });
