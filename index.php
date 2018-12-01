@@ -19,9 +19,20 @@ $c['errorHandler'] = function ($c) {
 };
 
 $app->get('/', function ($request, $response) {
-    include 'index.html';
+    include 'testphp.html';
     return $response;
 });
+
+$app->post('/signup', function($request, $response) {
+    require_once('dbaccess.php');
+    require_once('signup.php');
+});
+
+$app->post('/login', function($request, $response) {
+    require_once('dbaccess.php');
+    require_once('login.php');
+});
+
 $app->post('/query', 'retrieve');
 function retrieve(){
     require_once('dbaccess.php');
