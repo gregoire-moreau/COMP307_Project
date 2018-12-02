@@ -3,11 +3,13 @@
 <html>
     <head>
         <script>
-            function formatAsJSON(var a1, var a2) {
-                // a1 contains variable names, a2 contains corresponding data, lengths must agree
+            function formatAsJSON(a1, a2) {
+                //a1 contains variable names, a2 contains corresponding data, lengths must agree
                 if (a1.length != a2.length) {
-                   Console.log("The lengths of two arrays sent to formatAsJSON() did not match.");
-                   return null;
+                    if (console) {
+                        console.log("The lengths of two arrays sent to formatAsJSON() did not match.");
+                        return null;
+                    }
                 }
                 //'{"name":"John", "age":31, "city":"New York"}'
                 var object = '{';
@@ -18,13 +20,31 @@
                         object += ', ';
                     }
                 }
-                var object += '}';
+                object += '}';
                 var objJSON = JSON.stringify(object);
                 return objJSON;
             }
+            
+            function myFunction(){
+                var a1 = ["username", "age"]; 
+                var name = document.getElementById("frmName").value;
+                var a2 = [name, "20"];
+                var res = formatAsJSON(a1, a2);
+                document.getElementById("textarea").innerHTML = res;
+            }
         </script>
     </head>
+    
     <body>
-        <p>Placeholder text</p>
+        <form id="myForm">
+			Please enter your name:<br>
+			<input type="text" id="frmName" name="name" value="Enter name here"><br>
+			<input type="submit" value="Don't click">
+        </form>
+        
+        <button onclick="myFunction()">Click here</button><br/>
+        
+        <p id="textarea">Placeholder text</p>
     </body>
+     
 </html>
