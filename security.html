@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- NOT FOR FINAL USE, JUST A SCRIPT -->
+<html>
+    <head>
+        <script>
+            // NOTE: this script should be hidden in a file, invisible to users
+            // from a given string, deterministically a semi-unique generates an 8-character string
+            function hash(password) {
+                var msg = password;
+                var interim = "";
+                var hashed = "";
+                
+                var i;
+                var prev = 0;
+                var salt = false;
+                for (i = 0; i < msg.length; i++) {
+                    var code = msg.charCodeAt(i);
+                    interim += code.toString();
+                    if (salt) {
+                        interim += prev.toString(); // "salt" the string by adding deterministically adding extra characters
+                        salt = false;
+                    } else {
+                        prev = (prev+code)%10;
+                        salt = true;
+                    }
+                }
+                if (console) {
+                    console.log(interim);
+                }
+                var j;
+                for (j = 0; j*2 < interim.length; j++) {
+                    var n = interim[2*j] + interim[2*j+1];
+                    n += 32;
+                    while (n > 126) {
+                        n = n%126;
+                        n += 32;
+                    }
+                    var c = String.fromCharCode(n);
+                    hashed += c;
+                }
+                if (console) {
+                    console.log(hashed);
+                }
+                var first = hashed.slice(0, 4);
+                var second = hashed.slice(-5, -1);
+                return first.concat(second);
+            }
+            
+            function myFunction(){
+                var password = document.getElementById("frmPass").value;
+                var res = hash(password);
+                document.getElementById("textarea").innerHTML = res;
+            }
+        </script>
+    </head>
+    <body>
+        <form id="myForm">
+			Please enter your password:<br>
+			<input type="text" id="frmPass" name="name" value="Password"><br>
+			<input type="submit" value="Don't click">
+        </form>
+        
+        <button onclick="myFunction()">Click here</button><br/>
+        
+        <p id="textarea">Placeholder text</p>
+    </body>
+</html>
