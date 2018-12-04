@@ -1,0 +1,24 @@
+
+SIGNUP
+First name of person: fname
+Last name:            lname
+Email:                email
+Username:             uname
+Password:             password
+Location:             location
+-- new form
+Dog name:             dname
+Breed:                breed
+Age:                  age
+Activity 1, 2, 3:     act1, act2, act3
+
+PROFILE
+Picture:              ???
+things could be modified, but that's extension of functionality
+
+LOGIN
+Username (bis)
+Password (bis)
+
+
+
