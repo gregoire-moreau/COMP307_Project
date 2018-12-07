@@ -14,7 +14,11 @@ Activity 1, 2, 3:     act1, act2, act3
 
 PROFILE
 Picture:              ???
-things could be modified, but that's extension of functionality
+    -could be modified, but that's extension of functionality
+Dog name (bis)
+Breed (bis)
+Age (bis)
+Activity 1, 2, 3 (bis)
 
 LOGIN
 Username (bis)
