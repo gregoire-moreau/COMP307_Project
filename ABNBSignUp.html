@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+    .theme{
+    font-family: "Courier New", monospace; 
+    font-size: 1.5em;
+    
+    text-align: center;
+   
+    
+    padding-left: 10%; 
+    padding-right: 10%; 
+    padding-top: 2%; 
+    padding-bottom: 2%; 
+    
+    }
+    .form{
+    font-family: "Courier New", monospace; 
+    font-size: 1em;
+   
+    }
+    
+        input[type=text], select{
+    box-sizing: border-box;
+        box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    border: 1px solid #2ce8db;  
+        padding: 10px 20px; 
+        border-radius: 8px;
+        outline: none;
+        
+    }
+       
+    body {
+    background-image: url("images/paw-3.jpg");
+    background-position: 50% 50%;
+    background-repeat: repeat;
+	}
+    </style>
+    <script>
+    
+    
+    </script>
+    
+    
+</head> 
+
+<body>
+    
+    <div class="theme">
+       <p style="font-size: 1.5em; background-color: white; border-radius: 8px; box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; padding: 20px;"> We're so happy you've decided to get barking with us! Please take a few minutes to help us get you signed up.</p>
+    
+    <form action="/signup" method="post" class="form">
+        <p  style="font-size: 1.5em">Please enter your personal information:</p>
+        </br>
+    
+        <input type="text" id="fname" name="fname" placeholder="First name" class="form">
+        </br>
+        </br>
+        
+        <input type="text" id="lname" name="lname" placeholder="Last name" class="form">
+        </br>
+        </br>
+
+        <input type="text" id="email" name="email" placeholder="Email" class="form">
+        </br>
+        </br>
+
+        <input type="text" id="uname" name="uname" placeholder="Username" class="form">
+        </br>
+        </br>
+
+        <input type="text" id="password" name="password" placeholder="Password" class="form">
+        </br>
+        </br>
+
+        <p style="font-size: 1.5em"> Select your location:</p>
+        
+        </br>
+        <select name="location" class="form">
+        <option value="Downtown">Downtown</option>
+        <option value="Plateau">Plateau</option>
+        <option value="Mile-end">Mile-end</option>
+        <option value="Outremont">Outremont</option>
+        <option value="Westmount">Westmount</option>
+        </select>
+        </br>
+    
+</div>
+
+<div class="theme" >
+        <form theme="form">
+            <p style="font-size: 1.5em">Please enter your dog's information:</p>
+        </br>
+
+        <input type="text" id="dname" name="dname" placeholder="Name" class="form">
+        </br>
+        </br>
+        <input type="text" id="breed" name="breed" placeholder="Breed" class="form">
+        </br>
+        </br>
+        <input type="text" id="age" name="age" placeholder="Age" class="form">
+        </br>
+        </br>
+
+        
+
+        <input type="submit" value="Submit" class="form">
+        </br>
+        </br>
+    </form>
+</div>
+
+
+</body> 
+
+
+</html>
