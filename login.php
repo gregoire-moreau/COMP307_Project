@@ -1,5 +1,5 @@
 <?php
-$username = $_POST['username'];
+$username = $_POST['uname'];
 $hashPass = $_POST['password'];
 if(str_word_count($username) >1){ //To avoid sql injection
     echo "error1";
@@ -19,7 +19,9 @@ try{
     if($data == NULL){
         echo "There is no user with that username or the password doesn't match the username";
     }
-    echo var_dump($data);
+    else{
+        echo "Login complete, where do we go next?";
+    }
 }catch (Exception $e) {
     echo 'Exception reçue : ',  $e->getMessage(), "\n";
 }
