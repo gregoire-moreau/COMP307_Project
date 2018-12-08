@@ -7,28 +7,28 @@ $lastName = $dataSignup['lname'];
 $location = $dataSignup['location'];
 
 if(strpos($username, " ") >-1){ //To avoid sql injection
-    $toRet["status"] = "wrong";
+    $toRet["status"] = false;
     $toRet["field"] = "uname";
     $toRet["errorMessage"] = "Username should be in one word";
     echo json_encode($toRet);
     return;
 }
 if(strpos($email, " ") >-1){
-    $toRet["status"] = "wrong";
+    $toRet["status"] = false;
     $toRet["field"] = "email";
     $toRet["errorMessage"] = "Email shouldn't contain spaces";
     echo json_encode($toRet);
     return;
 }
 if(str_word_count($hashPass) >1){
-    $toRet["status"] = "wrong";
+    $toRet["status"] = false;
     $toRet["field"] = "password";
     $toRet["errorMessage"] = "Password shouldn't contain spaces";
     echo json_encode($toRet);
     return;
 }
 if(!checkField($username) ||  !checkField($email) || !checkField($hashPass)){
-    $toRet["status"] = "wrong";
+    $toRet["status"] = false;
     $toRet["field"] = "all";
     $toRet["errorMessage"] = "One of the required fields is empty, probably checked in javascript";
     echo json_encode($toRet);
@@ -43,7 +43,7 @@ try{
         $dataUname[] = $row;
     }
     if($dataUname[0]["COUNT(username)"] != "0"){
-        $toRet["status"] = "wrong";
+        $toRet["status"] = false;
         $toRet["field"] = "username";
         $toRet["errorMessage"] = "This username is already taken.";
         echo json_encode($toRet);
@@ -53,7 +53,7 @@ try{
         $dataEmail[] = $row;
     }
     if($dataEmail[0]["COUNT(email)"] != "0"){
-        $toRet["status"] = "wrong";
+        $toRet["status"] = false;
         $toRet["field"] = "email";
         $toRet["errorMessage"] = "This email is already taken.";
         echo json_encode($toRet);
@@ -66,7 +66,7 @@ try{
     }
     
 }catch (Exception $e) {
-    $toRet["status"] = "wrong";
+    $toRet["status"] = false;
     $toRet["field"] = "all";
     $toRet["errorMessage"] = "Exception received in php".$e.getMessage();
     return;

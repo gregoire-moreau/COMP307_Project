@@ -19,11 +19,11 @@ try{
         $data[] = $row;
     }
     if($data == NULL){
-     echo '{"status":"wrong"}';
+     echo '{"status":false}';
     }
     else{
-        echo '{"status":"ok"}';
+        echo '{"status":true}';
     }
 }catch (Exception $e) {
-    echo '{"status":"wrong"}';
+    echo '{"status":false}';
 }
