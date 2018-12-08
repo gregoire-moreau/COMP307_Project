@@ -19,13 +19,17 @@ $c['errorHandler'] = function ($c) {
 };
 
 $app->get('/', function ($request, $response) {
-    include 'testphp.html';
+    include 'ABNBHome.html';
     return $response;
 });
 
 $app->post('/signup', function($request, $response) {
     require_once('dbaccess.php');
+    $newUser = false;
     require_once('signup.php');
+    if($newUser){
+        require_once('newdog.php');
+    }
 });
 
 $app->post('/login', function($request, $response) {
@@ -48,5 +52,9 @@ function retrieve(){
     }catch (Exception $e) {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
     }
+}
+
+function checkField($fieldVal){
+    return !(strlen($fieldVal) == 0);
 }
 $app->run(); 
