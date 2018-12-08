@@ -46,7 +46,46 @@
         
         <script src="scripts/hash.js"></script>
         <script>
-        
+            var request;
+            function login() {
+                var a1 = ["uname", "password"];
+                var a2 = [document.getElementById("uname").value, document.getElementById("password").value];
+                var payload = formatAsJSON(a1, a2);
+                request = new XMLHttpRequest();
+                request.open("POST", 'login', true);
+                request.addEventListener("readystatechange", requestReceived, false);
+                request.send(payload);
+                return false;
+            }
+            
+            function requestReceived() {
+                if (request.status == 200) {
+                    document.getElementById("errormsg").innerHTML = "Succesful login.";
+                } else {
+                    document.getElementById("errormsg").innerHTML = "Invalid username or password.";
+                }
+            }
+            
+            function formatAsJSON(a1, a2) {
+                //a1 contains variable names, a2 contains corresponding data, lengths must agree
+                if (a1.length != a2.length) {
+                    if (console) {
+                        console.log("The lengths of two arrays sent to formatAsJSON() did not match.");
+                        return null;
+                    }
+                }
+                //example json: '{"name":"John", "age":31, "city":"New York"}'
+                var json = '{';
+                var i;
+                for (i = 0; i < a1.length; i++) {
+                    json += '"' + a1[i] + '":"' + a2[i] + '"';
+                    if (i+1 < a1.length) {
+                        json += ', ';
+                    }
+                }
+                json += '}';
+                return json;
+            }
         </script>
 	</head> 
 	
@@ -59,13 +98,14 @@
 			Login
 			</br>
             </br>
-			<form action="./login" method="post">
+			<form onsubmit="return login()">
 				<input type="text" id="uname" name="uname" placeholder="Username" style="font-family: Courier New, monospace; font-size: .75em">
 				</br>
                 </br>
 				<input type="password" id="password" name="password" placeholder="Password" style="font-family: Courier New, monospace; font-size: .75em">
 				</br>
                 </br>
+                <span id="errormsg" style="color: red"></span>
                 <input type="submit" value="Submit" style="font-family: Courier New, monospace; font-size: .75em;">
                 </br>
                 </br>
