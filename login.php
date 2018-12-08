@@ -17,10 +17,10 @@ try{
         $data[] = $row;
     }
     if($data == NULL){
-        echo "There is no user with that username or the password doesn't match the username";
+       return $response->withStatus(201);
     }
     else{
-        echo "Login complete, where do we go next?";
+        return $response->withStatus(200);
     }
 }catch (Exception $e) {
     echo 'Exception reçue : ',  $e->getMessage(), "\n";

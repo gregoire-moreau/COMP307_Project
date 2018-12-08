@@ -29,12 +29,14 @@ $app->post('/signup', function($request, $response) {
     require_once('signup.php');
     if($newUser){
         require_once('newdog.php');
+        include 'profile.html';
     }
 });
 
 $app->post('/login', function($request, $response) {
     require_once('dbaccess.php');
     require_once('login.php');
+    include 'profile.html';
 });
 
 $app->post('/query', 'retrieve');
