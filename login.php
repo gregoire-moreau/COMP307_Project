@@ -1,6 +1,7 @@
 <?php
-$username = $_POST['uname'];
-$hashPass = $_POST['password'];
+$username = $dataLogin["uname"];
+$hashPass = $dataLogin["password"];
+
 if(str_word_count($username) >1){ //To avoid sql injection
     echo "error1";
     return;
@@ -10,6 +11,7 @@ if(strpos($hashPass, " ") >-1){
     return;
 }
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$hashPass';";
+
 try{
     $result  = $mysqli->query($query);
     $data = NULL;
@@ -17,10 +19,10 @@ try{
         $data[] = $row;
     }
     if($data == NULL){
-       return $response->withStatus(201);
+     echo '{"status":"wrong"}';
     }
     else{
-        return $response->withStatus(200);
+        echo '{"status":"ok"}';
     }
 }catch (Exception $e) {
     echo 'Exception reçue : ',  $e->getMessage(), "\n";

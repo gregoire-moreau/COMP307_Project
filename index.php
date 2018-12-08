@@ -34,9 +34,9 @@ $app->post('/signup', function($request, $response) {
 });
 
 $app->post('/login', function($request, $response) {
+    $dataLogin =  json_decode(file_get_contents('php://input'), true);
     require_once('dbaccess.php');
     require_once('login.php');
-    include 'profile.html';
 });
 
 $app->post('/query', 'retrieve');
