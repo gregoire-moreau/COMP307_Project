@@ -81,16 +81,11 @@
         <script>
             var data;
             var obj;
-            
-            function load() {
-                // post username to server, receive data
-                
-                data = '{"fname":"John", "dname":"Milo", "breed":"Schnauzer", "age":7, "act1":"Sleeping", "act2":"Eating", "act3":"Barking"}';
-                obj = JSON.parse(data);
-                document.getElementById("fname").innerHTML = obj.fname;
-            }
-            
+        </script>
+        <script src="scripts/load.js"></script>
+        <script>
             function loadData() {
+                document.getElementById("fname").innerHTML = obj.fname;
                 document.getElementById("dname").innerHTML = obj.dname;
                 document.getElementById("breed").innerHTML = obj.breed;
                 document.getElementById("age").innerHTML = obj.age;
