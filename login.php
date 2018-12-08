@@ -25,5 +25,5 @@ try{
         echo '{"status":"ok"}';
     }
 }catch (Exception $e) {
-    echo 'Exception reçue : ',  $e->getMessage(), "\n";
+    echo '{"status":"wrong"}';
 }
