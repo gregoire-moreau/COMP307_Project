@@ -62,7 +62,7 @@
                 }
                 uname = uname.replace(/\s+/g, '');
                 password = password.replace(/\s+/g, '');
-                //password = hash(password);
+                password = hash(password);
 
                 // part 2: POST to server
                 var a1 = ["uname", "password"];
