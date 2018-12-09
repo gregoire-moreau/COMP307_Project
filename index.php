@@ -57,6 +57,12 @@ $app->post('/profile', function($request, $response) {
     }
 });
 
+$app->post('/upload', function($request, $response) {
+    if (checkSessionID()){
+        require_once('receive_image.php');
+    }
+});
+
 $app->post('/query', 'retrieve');
 function retrieve(){
     require_once('dbaccess.php');
@@ -84,7 +90,7 @@ $app->get('/logout', function($request, $response){
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    require_once('profile.php');
+    require_once('receive_image.php');
 });
 
 function checkField($fieldVal){
