@@ -82,10 +82,7 @@
                     if (request.responseText != null) {
                         var data = JSON.parse(request.responseText);
                         if (data.status) {
-                            var p = document.getElementById("credentials");
-                            p.uname.value = uname;
-                            window.open('main.html', 'mainpage');
-                            p.submit();
+                            window.open('main.html', '_self');
                         } else {
                             document.getElementById("errormsg").innerHTML = "Invalid username or password.";
                         }
@@ -125,9 +122,5 @@
             <a class="link" href="ABNBSignUp.html" onclick=credentials()>Sign up</a>
 		</div>
 
-        <form id="credentials" method="post" action="test.asp" target="mainpage">
-            <input type="hidden" name="uname" value="">
-            <input type="hidden" name="fname" value="">
-        </form>
 	</body>
 </html> 
