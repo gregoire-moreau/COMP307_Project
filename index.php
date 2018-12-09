@@ -20,7 +20,8 @@ $app->get('/', function ($request, $response) {
             return $response;
         }
         else{
-            echo "Show connected home page";
+            include 'main.html';
+            return $response;
         }
     }
 });
@@ -44,10 +45,15 @@ $app->post('/login', function($request, $response) {
     if($success){
         $newID = randomString();
         $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', '$username') ON DUPLICATE KEY UPDATE SessionID = VALUES(SessionID); ";
-        echo $sessionQuery;
         $GLOBALS['mysqli']->query($sessionQuery);
         setCookie("SessionID", $newID, false, "/", false);
         echo '{"status":true}';
+    }
+});
+
+$app->post('/profile', function($request, $response) {
+    if (checkSessionID()){
+        require_once('profile.php');
     }
 });
 
@@ -72,16 +78,38 @@ $app->get('/logout', function($request, $response){
     $query = "DELETE FROM sessions WHERE SessionID = '".$_COOKIE['SessionID']."';";
     $GLOBALS['mysqli']->query($query);
     setcookie("SessionID", "", time()-3600);
+    include 'ABNBHome.html';
+    return $response;
 });
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    require_once('pending_requests.php');
-    require_once('friends.php');
+    require_once('profile.php');
 });
 
 function checkField($fieldVal){
     return !(strlen($fieldVal) == 0);
+}
+
+function checkSessionID(){
+    if(!isSet($_COOKIE['SessionID'])){
+        return false;
+    }
+    else {
+        $checkCookieQuery = "SELECT uname FROM sessions WHERE SessionID='".$_COOKIE['SessionID']."';";
+        $result  = $GLOBALS['mysqli']->query($checkCookieQuery);
+        $data = NULL;
+        while($row =  $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        if($data == NULL){
+            include 'ABNBHome.html';
+            return $false;
+        }
+        else{
+            return $true;
+        }
+    }
 }
 
 function randomString(){
