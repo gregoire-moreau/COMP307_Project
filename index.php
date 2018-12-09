@@ -56,6 +56,11 @@ function retrieve(){
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
     }
 }
+$app->get('/test', function($request, $response){
+    require_once('dbaccess.php');
+    //require_once('pending_requests.php');
+    require_once('friends.php');
+});
 
 function checkField($fieldVal){
     return !(strlen($fieldVal) == 0);
