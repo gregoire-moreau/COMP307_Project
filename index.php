@@ -43,7 +43,8 @@ $app->post('/login', function($request, $response) {
     require_once('login.php');
     if($success){
         $newID = randomString();
-        $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', '$username'); ";
+        $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', '$username') ON DUPLICATE KEY UPDATE SessionID = VALUES(SessionID); ";
+        echo $sessionQuery;
         $GLOBALS['mysqli']->query($sessionQuery);
         setCookie("SessionID", $newID, false, "/", false);
         echo '{"status":true}';
