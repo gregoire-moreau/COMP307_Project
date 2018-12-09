@@ -2,14 +2,6 @@
 $username = $dataLogin["uname"];
 $hashPass = $dataLogin["password"];
 
-if(str_word_count($username) >1){ //To avoid sql injection
-    echo "error1";
-    return;
-}
-if(strpos($hashPass, " ") >-1){
-    echo "error3";
-    return;
-}
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$hashPass';";
 
 try{

@@ -9,19 +9,19 @@
 
             text-align: center;
 
-
             padding-left: 10%; 
             padding-right: 10%; 
             padding-top: 2%; 
             padding-bottom: 2%; 
         }
-        
         .form{
             font-family: "Courier New", monospace; 
             font-size: 1em;
-
         }
-
+        .errorMsg{
+            font-weight: bold;
+            color: red;
+        }
         input[type=text], select{
             box-sizing: border-box;
             box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
@@ -30,7 +30,6 @@
             border-radius: 8px;
             outline: none;
         }
-
         body {
             background-image: url("images/paw-3.jpg");
             background-position: 50% 50%;
@@ -43,8 +42,41 @@
     </style>
     
     <script src="scripts/hash.js"></script>
+    <script src="scripts/json.js"></script>
     <script>
-        
+        var request;
+        function signup() {
+            // part 1: process login info
+            var fname = document.getElementById("fname").value;
+            var lname = document.getElementById("lname").value;
+            var email = document.getElementById("email").value;
+            var uname = document.getElementById("uname").value;
+            var password = document.getElementById("password").value;
+            if (uname.length <= 1 || password.length < 8) {
+                document.getElementById("errormsg").innerHTML = "Username or password is too short.";
+                return false;
+            }
+            fname = fname.replace(/\s+/g, '');
+            lname = lname.replace(/\s+/g, '');
+            email = email.replace(/\s+/g, '');
+            uname = uname.replace(/\s+/g, '');
+            password = password.replace(/\s+/g, '');
+            password = hash(password);
+
+            // part 2: POST to server
+            //var a1 = ["uname", "password"];
+            //var a2 = [document.getElementById("uname").value, document.getElementById("password").value];
+            var payload = formatAsJSON(a1, a2);
+            request = new XMLHttpRequest();
+            request.open("POST", 'login', true);
+            request.addEventListener("readystatechange", requestReceived, false);
+            request.send(payload);
+            return false;
+        }
+
+        function requestReceived() {
+
+        }
     </script>
  
 </head> 
@@ -54,28 +86,33 @@
     <div class="theme">
        <p style="font-size: 1.5em; background-color: white; border-radius: 8px; box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; padding: 20px;"> We're so happy you've decided to get barking with us! Please take a few minutes to help us get you signed up.</p>
     
-    <form action="./signup" method="post" class="form">
+    <form onsubmit="return signup()">
         <p  style="font-size: 1.5em">Please enter your personal information:</p>
         </br>
     
         <input type="text" id="fname" name="fname" placeholder="First name" class="form">
         </br>
+        <span  class="errorMsg" id="fnameError"></span>
         </br>
         
         <input type="text" id="lname" name="lname" placeholder="Last name" class="form">
         </br>
+        <span  class="errorMsg" id="lnameError"></span>
         </br>
 
         <input type="text" id="email" name="email" placeholder="Email" class="form">
         </br>
+        <span  class="errorMsg" id="emailError"></span>
         </br>
 
         <input type="text" id="uname" name="uname" placeholder="Username" class="form">
         </br>
+        <span  class="errorMsg" id="unameError"></span>
         </br>
 
         <input type="text" id="password" name="password" placeholder="Password" class="form">
         </br>
+        <span  class="errorMsg" id="passwordError"></span>
         </br>
 
         <p style="font-size: 1.5em"> Select your location:</p>
