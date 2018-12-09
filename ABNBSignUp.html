@@ -86,17 +86,19 @@
         }
 
         function requestReceived() {
-            if (request.responseText != null) {
-                var data = JSON.parse(request.responseText);
-                if (data.status) {
-                    document.getElementById("errorMsg").innerHTML = "Signup succesful.";
-                    // go to login
+            if (request.readyState == 4 && request.status == 200) {
+                if (request.responseText != null) {
+                    var data = JSON.parse(request.responseText);
+                    if (data.status) {
+                        alert("Signup succesful!");
+                        window.open("ABNBHome.html", "_self");
+                    } else {
+                        document.getElementById("errorMsg").innerHTML = "Something was wrong with your info.";
+                        // error message according to field
+                    }
                 } else {
-                    document.getElementById("errorMsg").innerHTML = "Something was wrong with your info.";
-                    // error message according to field
+                    document.getElementById("errorMsg").innerHTML = "Something went wrong. Try again later.";
                 }
-            } else {
-                document.getElementById("errorMsg").innerHTML = "Something went wrong. Try again later.";
             }
         }
     </script>
@@ -111,36 +113,36 @@
     <form method="post" onsubmit="return signup()">
         <p  style="font-size: 1.5em">Please enter your personal information:</p>
         <span class="errorMsg" id="errorMsg"></span>
-        </br>
+        <br>
     
         <input type="text" id="fname" name="fname" placeholder="First name" class="form">
-        </br>
+        <br>
         <span class="errorMsg" id="fnameError"></span>
-        </br>
+        <br>
         
         <input type="text" id="lname" name="lname" placeholder="Last name" class="form">
-        </br>
+        <br>
         <span class="errorMsg" id="lnameError"></span>
-        </br>
+        <br>
 
         <input type="text" id="email" name="email" placeholder="Email" class="form">
-        </br>
+        <br>
         <span class="errorMsg" id="emailError"></span>
-        </br>
+        <br>
 
         <input type="text" id="uname" name="uname" placeholder="Username" class="form">
-        </br>
+        <br>
         <span class="errorMsg" id="unameError"></span>
-        </br>
+        <br>
 
         <input type="text" id="password" name="password" placeholder="Password" class="form">
-        </br>
+        <br>
         <span class="errorMsg" id="passwordError"></span>
-        </br>
+        <br>
 
         <p style="font-size: 1.5em"> Select your location:</p>
         
-        </br>
+        <br>
         <select id="location" name="location" class="form">
         <option value="Downtown">Downtown</option>
         <option value="Plateau">Plateau</option>
@@ -148,27 +150,71 @@
         <option value="Outremont">Outremont</option>
         <option value="Westmount">Westmount</option>
         </select>
-        </br>
+        <br>
     
     </div>
 
     <div class="theme" >
         <form theme="form" method="post" onsubmit="return signup()">
         <p style="font-size: 1.5em">Please enter your dog's information:</p>
-        </br>
+        <br>
 
         <input type="text" id="dname" name="dname" placeholder="Name" class="form">
-        </br>
-        </br>
+        <br>
+        <br>
         <input type="text" id="breed" name="breed" placeholder="Breed" class="form">
-        </br>
-        </br>
+        <br>
+        <br>
         <input type="text" id="age" name="age" placeholder="Age" class="form">
-        </br>
-        </br>
+        <br>
+        <br>
+        <p style="font-size: 1.5em"> Select your dog's favourite activities:</p>
+        <br>
+        <select name="act1" class="form">
+            <option value="" disabled selected>Activity 1</option>
+            <option value="Fetch">Fetch</option>
+            <option value="Running">Running</option>
+            <option value="Playing with toys">Playing with toys</option>
+            <option value="Playing with other dogs">Playing with other dogs</option>
+            <option value="Frisbee">Frisbee</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Cuddling">Cuddling</option>
+            <option value="Wrestling">Wrestling</option>
+            <option value="Chase">Chase</option>
+        </select>
+        <br>
+        <br>
+        <select name="act2" class="form">
+            <option value="" disabled selected>Activity 2</option>
+            <option value="Fetch">Fetch</option>
+            <option value="Running">Running</option>
+            <option value="Playing with toys">Playing with toys</option>
+            <option value="Playing with other dogs">Playing with other dogs</option>
+            <option value="Frisbee">Frisbee</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Cuddling">Cuddling</option>
+            <option value="Wrestling">Wrestling</option>
+            <option value="Chase">Chase</option>
+        </select>
+        <br>
+        <br>
+        <select name="act3" class="form">
+            <option value="" disabled selected>Activity 3</option>
+            <option value="Fetch">Fetch</option>
+            <option value="Running">Running</option>
+            <option value="Playing with toys">Playing with toys</option>
+            <option value="Playing with other dogs">Playing with other dogs</option>
+            <option value="Frisbee">Frisbee</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Cuddling">Cuddling</option>
+            <option value="Wrestling">Wrestling</option>
+            <option value="Chase">Chase</option>
+        </select>
+        <br>
+        <br>
         <input type="submit" value="Submit" class="form">
-        </br>
-        </br>
+        <br>
+        <br>
         </form>
     </div>
 

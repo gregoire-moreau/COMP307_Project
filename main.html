@@ -80,6 +80,7 @@
         </style>
         
         <script>
+            var posted;
             var data;
             var obj;
         </script>
@@ -87,12 +88,7 @@
         <script src="scripts/json.js"></script>
         <script>
             function loadData() {
-                document.getElementById("dname").innerHTML = obj.dname;
-                document.getElementById("breed").innerHTML = obj.breed;
-                document.getElementById("age").innerHTML = obj.age;
-                document.getElementById("act1").innerHTML = obj.act1;
-                document.getElementById("act2").innerHTML = obj.act2;
-                document.getElementById("act3").innerHTML = obj.act3;
+                
             }
         </script>
 	</head> 
@@ -102,7 +98,7 @@
             Welcome, <span id="uname">User</span>!
             <br/>
             <br/>
-            <a class="side" href="main.html">Main Page</a>
+            <a class="side" href="ABNBHome.html">Main Page</a>
             <br/>
             <a class="side" href>Profile</a>
             <br/>
@@ -111,22 +107,6 @@
             <a class="side" href>Playdates</a>
         </div>
         <br/>
-        <div class="profile">
-            <span id="dname">Dog</span>'s Profile
-            <br/>
-            <br/>
-            Breed: <span id="breed"></span>
-            <br/>
-            Age: <span id="age"></span>
-            <br/>
-            Activity 1: <span id="act1"></span>
-            <br/>
-            Activity 2: <span id="act2"></span>
-            <br/>
-            Activity 3: <span id="act3"></span>
-            <br/>
-            <button onclick="loadData()">Test</button>
-        </div>
         
 	</body>
 </html> 

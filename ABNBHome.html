@@ -52,9 +52,11 @@
         <script src="scripts/json.js"></script>
         <script>
             var request;
+            var uname;
+            
             function login() {
                 // part 1: process login info
-                var uname = document.getElementById("uname").value;
+                uname = document.getElementById("uname").value;
                 var password = document.getElementById("password").value;
                 if (uname.length <= 1 || password.length < 8) {
                     document.getElementById("errormsg").innerHTML = "Username or password is too short.";
@@ -76,16 +78,20 @@
             }
 
             function requestReceived() {
-                if (request.responseText != null) {
-                    var data = JSON.parse(request.responseText);
-                    if (data.status) {
-                        document.getElementById("errormsg").innerHTML = "Login succesful.";
-                        // go to main page
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        var data = JSON.parse(request.responseText);
+                        if (data.status) {
+                            var p = document.getElementById("credentials");
+                            p.uname.value = uname;
+                            window.open('main.html', 'mainpage');
+                            p.submit();
+                        } else {
+                            document.getElementById("errormsg").innerHTML = "Invalid username or password.";
+                        }
                     } else {
-                        document.getElementById("errormsg").innerHTML = "Invalid username or password.";
+                        document.getElementById("errormsg").innerHTML = "Something went wrong. Try again later.";
                     }
-                } else {
-                    document.getElementById("errormsg").innerHTML = "Something went wrong. Try again later.";
                 }
             }
         </script>
@@ -117,6 +123,11 @@
 		<div style="font-family: Courier New, monospace; font-weight: 800; font-size: 1.5em; text-align: center; margin-top: 3%"> 
 			Don't have an account? 
             <a class="link" href="ABNBSignUp.html" onclick=credentials()>Sign up</a>
-		</div> 
+		</div>
+
+        <form id="credentials" method="post" action="test.asp" target="mainpage">
+            <input type="hidden" name="uname" value="">
+            <input type="hidden" name="fname" value="">
+        </form>
 	</body>
 </html> 
