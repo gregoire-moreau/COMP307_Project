@@ -52,30 +52,52 @@
             var email = document.getElementById("email").value;
             var uname = document.getElementById("uname").value;
             var password = document.getElementById("password").value;
-            if (uname.length <= 1 || password.length < 8) {
-                document.getElementById("errormsg").innerHTML = "Username or password is too short.";
+            var dname = document.getElementById("dname").value;
+            var breed = document.getElementById("breed").value;
+            var age = document.getElementById("age").value;
+            var location = document.getElementById("location").value;
+
+            if (uname.length <= 1) {
+                document.getElementById("errorMsg").innerHTML = "Username must be at least 2 characters.";
                 return false;
             }
+            if (password.length < 8) {
+                document.getElementById("errorMsg").innerHTML = "Password must be at least 8 characters.";
+                return false;
+            }
+            
             fname = fname.replace(/\s+/g, '');
             lname = lname.replace(/\s+/g, '');
             email = email.replace(/\s+/g, '');
             uname = uname.replace(/\s+/g, '');
+            // bis for other variables...
             password = password.replace(/\s+/g, '');
             password = hash(password);
 
             // part 2: POST to server
-            //var a1 = ["uname", "password"];
-            //var a2 = [document.getElementById("uname").value, document.getElementById("password").value];
+            var a1 = ["fname","lname","email","location","uname", "password","dname","breed","age"];
+            var a2 = [fname, lname, email, location, uname, password, dname, breed, age];
             var payload = formatAsJSON(a1, a2);
             request = new XMLHttpRequest();
-            request.open("POST", 'login', true);
+            request.open("POST", 'signup', true);
             request.addEventListener("readystatechange", requestReceived, false);
             request.send(payload);
             return false;
         }
 
         function requestReceived() {
-
+            if (request.responseText != null) {
+                var data = JSON.parse(request.responseText);
+                if (data.status) {
+                    document.getElementById("errorMsg").innerHTML = "Signup succesful.";
+                    // go to login
+                } else {
+                    document.getElementById("errorMsg").innerHTML = "Something was wrong with your info.";
+                    // error message according to field
+                }
+            } else {
+                document.getElementById("errorMsg").innerHTML = "Something went wrong. Try again later.";
+            }
         }
     </script>
  
@@ -86,39 +108,40 @@
     <div class="theme">
        <p style="font-size: 1.5em; background-color: white; border-radius: 8px; box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; padding: 20px;"> We're so happy you've decided to get barking with us! Please take a few minutes to help us get you signed up.</p>
     
-    <form onsubmit="return signup()">
+    <form method="post" onsubmit="return signup()">
         <p  style="font-size: 1.5em">Please enter your personal information:</p>
+        <span class="errorMsg" id="errorMsg"></span>
         </br>
     
         <input type="text" id="fname" name="fname" placeholder="First name" class="form">
         </br>
-        <span  class="errorMsg" id="fnameError"></span>
+        <span class="errorMsg" id="fnameError"></span>
         </br>
         
         <input type="text" id="lname" name="lname" placeholder="Last name" class="form">
         </br>
-        <span  class="errorMsg" id="lnameError"></span>
+        <span class="errorMsg" id="lnameError"></span>
         </br>
 
         <input type="text" id="email" name="email" placeholder="Email" class="form">
         </br>
-        <span  class="errorMsg" id="emailError"></span>
+        <span class="errorMsg" id="emailError"></span>
         </br>
 
         <input type="text" id="uname" name="uname" placeholder="Username" class="form">
         </br>
-        <span  class="errorMsg" id="unameError"></span>
+        <span class="errorMsg" id="unameError"></span>
         </br>
 
         <input type="text" id="password" name="password" placeholder="Password" class="form">
         </br>
-        <span  class="errorMsg" id="passwordError"></span>
+        <span class="errorMsg" id="passwordError"></span>
         </br>
 
         <p style="font-size: 1.5em"> Select your location:</p>
         
         </br>
-        <select name="location" class="form">
+        <select id="location" name="location" class="form">
         <option value="Downtown">Downtown</option>
         <option value="Plateau">Plateau</option>
         <option value="Mile-end">Mile-end</option>
@@ -127,11 +150,11 @@
         </select>
         </br>
     
-</div>
+    </div>
 
-<div class="theme" >
-        <form theme="form">
-            <p style="font-size: 1.5em">Please enter your dog's information:</p>
+    <div class="theme" >
+        <form theme="form" method="post" onsubmit="return signup()">
+        <p style="font-size: 1.5em">Please enter your dog's information:</p>
         </br>
 
         <input type="text" id="dname" name="dname" placeholder="Name" class="form">
@@ -143,14 +166,11 @@
         <input type="text" id="age" name="age" placeholder="Age" class="form">
         </br>
         </br>
-
-        
-
         <input type="submit" value="Submit" class="form">
         </br>
         </br>
-    </form>
-</div>
+        </form>
+    </div>
 
 
 </body> 
