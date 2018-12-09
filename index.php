@@ -1,26 +1,28 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-$c = new \Slim\Container();
-$c['errorHandler'] = function ($c) {
-    return function ($request, $response, $exception) use ($c) {
-        return $response->withStatus(500)
-            ->withHeader('Content-Type', 'text/html')
-            ->write('Something went wrong!');
-    };
-};
 $app = new Slim\App;
-$c = $app->getContainer();
-$c['errorHandler'] = function ($c) {
-    return function ($request, $response, $exception) use ($c) {
-        return $response->withStatus(500)
-            ->withHeader('Content-Type', 'text/html')
-            ->write('Something went wrong!');
-    };
-};
+require_once('dbaccess.php');
 
 $app->get('/', function ($request, $response) {
-    include 'ABNBHome.html';
-    return $response;
+    if(!isSet($_COOKIE['SessionID'])){
+        include 'ABNBHome.html';
+        return $response;
+    }
+    else{
+        $checkCookieQuery = "SELECT uname FROM sessions WHERE SessionID='".$_COOKIE['SessionID']."';";
+        $result  = $GLOBALS['mysqli']->query($checkCookieQuery);
+        $data = NULL;
+        while($row =  $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        if($data == NULL){
+            include 'ABNBHome.html';
+            return $response;
+        }
+        else{
+            echo "Show connected home page";
+        }
+    }
 });
 
 $app->post('/signup', function($request, $response) {
@@ -36,8 +38,16 @@ $app->post('/signup', function($request, $response) {
 
 $app->post('/login', function($request, $response) {
     $dataLogin =  json_decode(file_get_contents('php://input'), true);
-    require_once('dbaccess.php');
+    //require_once('dbaccess.php');
+    $success = false;
     require_once('login.php');
+    if($success){
+        $newID = randomString();
+        $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', '$username'); ";
+        $GLOBALS['mysqli']->query($sessionQuery);
+        setCookie("SessionID", $newID, false, "/", false);
+        echo '{"status":true}';
+    }
 });
 
 $app->post('/query', 'retrieve');
@@ -56,13 +66,30 @@ function retrieve(){
         echo 'Exception reçue : ',  $e->getMessage(), "\n";
     }
 }
+
+$app->get('/logout', function($request, $response){
+    $query = "DELETE FROM sessions WHERE SessionID = '".$_COOKIE['SessionID']."';";
+    $GLOBALS['mysqli']->query($query);
+    setcookie("SessionID", "", time()-3600);
+});
+
 $app->get('/test', function($request, $response){
-    require_once('dbaccess.php');
-    //require_once('pending_requests.php');
+    //require_once('dbaccess.php');
+    require_once('pending_requests.php');
     require_once('friends.php');
 });
 
 function checkField($fieldVal){
     return !(strlen($fieldVal) == 0);
 }
+
+function randomString(){
+    $characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    $toRet = "";
+    for($i = 0; $i<10; $i++){
+        $toRet.= $characters[random_int(0, 35)];
+    }
+    return $toRet;
+}
+
 $app->run(); 

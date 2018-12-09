@@ -5,7 +5,7 @@ $hashPass = $dataLogin["password"];
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$hashPass';";
 
 try{
-    $result  = $mysqli->query($query);
+    $result  = $GLOBALS['mysqli']->query($query);
     $data = NULL;
     while($row =  $result->fetch_assoc()){
         $data[] = $row;
@@ -14,7 +14,7 @@ try{
      echo '{"status":false}';
     }
     else{
-        echo '{"status":true}';
+        $success = true;
     }
 }catch (Exception $e) {
     echo '{"status":false}';
