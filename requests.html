@@ -7,24 +7,30 @@
         <script src="scripts/json.js"></script>
         <script src="scripts/profile.js"></script>
         <script>
+            var indexRequests;
+            var indexSuggestions;
+            
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
                         // server response string goes into data
                         var data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
-                        document.getElementById("dname").innerHTML = data.dname;
+                        if (data.pendingRequests.length < 1) {
+                            document.getElementById("RequestsGrid").style.display = "none";
+                            var txt = document.createTextNode("You do not have any bark requests.");
+                            document.getElementById("barkrequests").appendChild(txt);
+                        }
                     } else {
                         alert("Something went wrong. Friends could not be loaded.");
                     }
                 }
             }
-            // dog id, dog name, dog image
-            function addBox(id, name, image) {
+            // grid id, box id, dog id, dog name, dog image
+            function createBox(grid, box, id, name, image) {
                 var div = document.createElement('div');
-                //div.setAttribute('id', id);
+                div.setAttribute('id', box);
                 div.setAttribute('class','grid-item');         
-                document.getElementById("FriendGrid").appendChild(div);
                 var img = document.createElement('img');
                 img.setAttribute('src',"uploads/"+image);
                 img.setAttribute('style',"padding-left: 10%; width: 100px; height: 100px");
@@ -49,13 +55,25 @@
                 b2.setAttribute('class','form');
                 b2.setAttribute('style',"font-size: .6em");
                 div.appendChild(b2);
-            }    
+                
+                return div;
+            }
+            
+            // grid id, box id, dog id, dog name, dog image
+            function replaceBox(grid, box, id, name, image) {
+                var div = createBox(grid, box, id, name, image);
+                
+                //document.getElementById(grid).replaceChild(div, document.getElementById(box));
+                document.getElementById(grid).removeChild(document.getElementById(box));
+                document.getElementById(grid).appendChild(div);
+                
+            }
             
         </script>
         
     </head>
 
-   <body onload="load('friends')">
+   <body onload="load('not_friends')">
 		<div class="sidebar">
             Welcome, <span id="uname">User</span>!
             <br/>
@@ -66,12 +84,15 @@
             <br/>
             <a class="side" href="friends.html">Friends</a>
             <br/>
-            <a class="side" href>Playdates</a>
+            <a class="side" href="requests.html">Barking</a>
+            <br/>
+            <a class="side" href="playdates.html">Playdates</a>
             <br/>
             <br/>
             <a class="side" href="logout">Logout</a>
             
-            <br><button onclick="addBox('ff','Zip')">Test</button>
+            <br><button onclick="replaceBox('RequestsGrid','r1',1,'Zip','dog.png')">Test</button>
+            <br><button onclick="replaceBox('RequestsGrid','r1',1,'Rem','dog.png')">Test2</button>
         </div>
         <br/>
        
@@ -83,9 +104,9 @@
                     <br>
                     <span >Name</span>
                     <br>
-                   <button class="form" style="font-size: .6em"> View </button>
+                    <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark Back </button>
-                   <button class="form" style="font-size: .6em"> Ignore </button>
+                    <button class="form" style="font-size: .6em"> Ignore </button>
                </div>
                <div id="r2" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
