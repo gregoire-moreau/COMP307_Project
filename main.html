@@ -12,15 +12,24 @@
         <script src="scripts/load.js"></script>
         <script src="scripts/json.js"></script>
         <script>
-            function loadData() {
-                
+            function requestReceived() {
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        // server response string goes into data
+                        var data = JSON.parse(request.responseText);
+                        document.getElementById("fname").innerHTML = data.fname;
+                        
+                    } else {
+                        alert("Something went wrong. Main could not be loaded.");
+                    }
+                }
             }
         </script>
 	</head> 
 	
-	<body onload="load()">
+	<body onload="load('main')">
 		<div class="sidebar">
-            Welcome, <span id="uname">User</span>!
+            Welcome, <span id="fname">User</span>!
             <br/>
             <br/>
             <a class="side" href="main.html">Main Page</a>
@@ -29,7 +38,7 @@
             <br/>
             <a class="side" href="friends.html">Friends</a>
             <br/>
-            <a class="side" href>Playdates</a>
+            <a class="side" href="playdates.html">Playdates</a>
             <br/>
             <br/>
             <a class="side" href="logout">Logout</a>
