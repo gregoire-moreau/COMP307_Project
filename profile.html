@@ -118,7 +118,7 @@
                     }
                 }
             }
-            
+            var request;
             function imagePost(){
                     
                     const files = document.querySelector('[type=file]').files;
@@ -126,12 +126,27 @@
                     
                     let file = files[0]; 
                     formData.append('files[]', file); 
-                    
-                    fetch("./receive_image", { method: 'POST', body: formData}).then(response => {console.log(response);});
+                    request = new XMLHttpRequest();
+                    request.open("POST", './receive_image', true);
+                    request.addEventListener("readystatechange", imageReceived, false);
+                    request.send(formData);
                     
                     return false;
-                
-                
+            }
+
+            function imageReceived(){
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        var data = JSON.parse(request.responseText);
+                        if (data.status) {
+                            document.getElementById("photo").setAttribute("src", "uploads/"+data.image);
+                        } else {
+                            console.log(data.error);
+                        }
+                    } else {
+                        console.log("Something went wrong");
+                    }
+                }
             }
           
             
