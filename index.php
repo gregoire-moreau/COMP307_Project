@@ -29,7 +29,7 @@ $app->get('/', function ($request, $response) {
 $app->post('/signup', function($request, $response) {
     $dataSignup =  json_decode(file_get_contents('php://input'), true);
     $toRet = array("status"=>"not done", "field"=>"", "errorMessage"=>"");
-    require_once('dbaccess.php');
+    //require_once('dbaccess.php');
     $newUser = false;
     require_once('signup.php');
     if($newUser){

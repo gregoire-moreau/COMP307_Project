@@ -9,8 +9,8 @@ $location = $dataSignup['location'];
 $uNameQuery = "SELECT COUNT(username) FROM users WHERE username = '$username' ;";
 $emailQuery = "SELECT COUNT(email) FROM users WHERE email = '$email' ;";
 try{
-    $uNameResult  = $mysqli->query($uNameQuery);
-    $emailResult  = $mysqli->query($emailQuery);
+    $uNameResult  = $GLOBALS["mysqli"]->query($uNameQuery);
+    $emailResult  = $GLOBALS["mysqli"]->query($emailQuery);
     while($row =  $uNameResult->fetch_assoc()){
         $dataUname[] = $row;
     }
@@ -33,7 +33,7 @@ try{
     }
     else{
         $insertQuery = "INSERT INTO `users`(`username`, `email`, `password`, `firstName`, `lastName`, `location`) VALUES ('$username', '$email', '$hashPass', '$firstName', '$lastName', '$location');";
-        $mysqli->query($insertQuery);
+        $GLOBALS["mysqli"]->query($insertQuery);
         $newUser = true;
     }
     
