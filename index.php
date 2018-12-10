@@ -72,6 +72,30 @@ $app->post('/not_friends', function($request, $response) {
     }
 });
 
+$app->post('/add_friend', function($request, $response){
+    $dogData =  json_decode(file_get_contents('php://input'), true);
+    require_once('addfriend.php');
+});
+
+$app->post('/main', function($request, $response){
+    if(checkSessionID()){
+        $fnameQuery = "SELECT firstName as fname FROM users WHERE username = (SELECT uname FROM sessions WHERE SessionID = ?);";
+        $stmt =  $GLOBALS['mysqli']->prepare($fnameQuery);
+        $stmt->bind_param('s', $_COOKIE['SessionID']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = NULL;
+        while($row =  $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        if($data == NULL){
+            echo '{"status":false, "fname":"user"}';
+        }
+        else{
+            echo '{"status":true, "fname":"'.$data[0]["fname"].'"}';
+        }
+    }
+});
 
 $app->get('/logout', function($request, $response){
     $query = "DELETE FROM sessions WHERE SessionID = ?;";
@@ -84,8 +108,7 @@ $app->get('/logout', function($request, $response){
 });
 
 $app->get('/test', function($request, $response){
-    //require_once('dbaccess.php');
-    require_once('pending_requests.php');
+    echo json_encode(NULL);
 });
 
 function checkField($fieldVal){

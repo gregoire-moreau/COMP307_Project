@@ -23,7 +23,7 @@ try{
             $data[] = $row;
         }
         $requests = json_encode($data);
-        $otherDogsQuery = "SELECT id, Name as dname, breed, age, activity1 as act1, activity2 as act2, activity3 as act3, image FROM dogs WHERE owner in (SELECT username FROM users where location = '$location') AND id NOT IN (SELECT dog1 FROM friends WHERE dog2=$dogID) AND id NOT IN (SELECT dog2 FROM friends where dog1=$dogID);";
+        $otherDogsQuery = "SELECT id, Name as dname, breed, age, activity1 as act1, activity2 as act2, activity3 as act3, image FROM dogs WHERE id!= $dogID AND owner in (SELECT username FROM users where location = '$location') AND id NOT IN (SELECT dog1 FROM friends WHERE dog2=$dogID) AND id NOT IN (SELECT dog2 FROM friends where dog1=$dogID);";
         $result = $GLOBALS['mysqli']->query($otherDogsQuery);
         $data = NULL;
         while($row =  $result->fetch_assoc()){
