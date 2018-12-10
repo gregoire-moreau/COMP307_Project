@@ -20,10 +20,14 @@ function hash(password) {
     var j;
     for (j = 0; j*2 < interim.length; j++) {
         var n = interim[2*j] + interim[2*j+1];
-        n += 32;
+        if (n <= 26) {
+            n += 100;
+        } else {
+            n += 6;
+        }
         while (n > 126) {
             n = n%126;
-            n += 32;
+            n += 33;
         }
         var c = String.fromCharCode(n);
         hashed += c;
