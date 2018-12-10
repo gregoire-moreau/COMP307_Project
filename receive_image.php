@@ -18,7 +18,7 @@ if(isset($_FILES['files'])){
             $errors[] = 'Extension not allowed: ' . $file_name . ' ' . $file_type;
         }
 
-        if ($file_size > 2097152) {
+        if ($file_size > 20097152) {
             $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
         }
 
@@ -26,9 +26,9 @@ if(isset($_FILES['files'])){
             move_uploaded_file($file_tmp, $file);
             $sqlQuery = "UPDATE dogs SET image = '$file_name' WHERE owner = (SELECT uname FROM sessions WHERE SessionID = '".$_COOKIE['SessionID']."');";
             $GLOBALS['mysqli']->query($sqlQuery);
-            echo '{"status":true}';
+            echo '{"status":true, "image":"'.$file_name.'"}';
         }
     }
 
-    if ($errors) echo '{"status":false}';;
+    if ($errors) echo '{"status":false, "error":"'.json_encode($errors).'"}';;
 }
