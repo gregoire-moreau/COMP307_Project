@@ -1,5 +1,5 @@
 <?php
-$dogIDQuery = "SELECT id, location from dogs, users WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?) AND username = (SELECT uname FROM sessions WHERE SessionID = ?) ;";
+$dogIDQuery = "SELECT id, name, firstName, location from dogs, users WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?) AND username = (SELECT uname FROM sessions WHERE SessionID = ?) ;";
 try{
     $stmt  = $GLOBALS['mysqli']->prepare($dogIDQuery);
     $stmt->bind_param('ss', $_COOKIE["SessionID"], $_COOKIE["SessionID"]);
@@ -16,6 +16,8 @@ try{
     else{
         $dogID = $data[0]["id"];
         $location = $data[0]["location"];
+        $fname =  $data[0]["firstName"];
+        $dogName =  $data[0]["name"];
         $pendingRequestsQuery = "SELECT id, Name as dname, breed, age, activity1 as act1, activity2 as act2, activity3 as act3, image FROM dogs WHERE id in (SELECT dog1 FROM friends WHERE dog2 = $dogID AND accepted=false)";
         $result = $GLOBALS['mysqli']->query($pendingRequestsQuery);
         $data = NULL;
@@ -30,7 +32,7 @@ try{
             $data[] = $row;
         }
         $otherDogs = json_encode($data);
-        echo '{"status":true, "pendingRequests":'.$requests.', "otherDogs":'.$otherDogs.'}';
+        echo '{"status":true, "fname":"'.$fname.'", "dname":"'.$dogName.'" , "pendingRequests":'.$requests.', "otherDogs":'.$otherDogs.'}';
     }
 
     
