@@ -66,6 +66,12 @@ $app->post('/friends', function($request, $response) {
     }
 });
 
+$app->post('/not_friends', function($request, $response) {
+    if (checkSessionID()){
+        require_once('pending_requests.php');
+    }
+});
+
 
 $app->get('/logout', function($request, $response){
     $query = "DELETE FROM sessions WHERE SessionID = ?;";
@@ -79,7 +85,7 @@ $app->get('/logout', function($request, $response){
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    require_once('friends.php');
+    require_once('pending_requests.php');
 });
 
 function checkField($fieldVal){
