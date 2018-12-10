@@ -2,10 +2,13 @@
 $username = $dataLogin["uname"];
 $hashPass = $dataLogin["password"];
 
-$query = "SELECT * FROM users WHERE username = '$username' AND password = '$hashPass';";
+$query = "SELECT * FROM users WHERE username = ? AND password = ?;";
 
 try{
-    $result  = $GLOBALS['mysqli']->query($query);
+    $stmt = $GLOBALS['mysqli']->prepare($query);
+    $stmt->bind_param('ss', $username, $hashPass);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $data = NULL;
     while($row =  $result->fetch_assoc()){
         $data[] = $row;

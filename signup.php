@@ -6,11 +6,18 @@ $firstName = $dataSignup['fname'];
 $lastName = $dataSignup['lname'];
 $location = $dataSignup['location'];
 
-$uNameQuery = "SELECT COUNT(username) FROM users WHERE username = '$username' ;";
-$emailQuery = "SELECT COUNT(email) FROM users WHERE email = '$email' ;";
+
+$uNameQuery = "SELECT COUNT(username) FROM users WHERE username = ? ;";
+$emailQuery = "SELECT COUNT(email) FROM users WHERE email = ? ;";
 try{
-    $uNameResult  = $GLOBALS["mysqli"]->query($uNameQuery);
-    $emailResult  = $GLOBALS["mysqli"]->query($emailQuery);
+    $stmt = $GLOBALS["mysqli"]->prepare($uNameQuery);
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $uNameResult  = $stmt->get_result();
+    $stmt = $GLOBALS["mysqli"]->prepare($emailQuery);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $emailResult  = $stmt->get_result();
     while($row =  $uNameResult->fetch_assoc()){
         $dataUname[] = $row;
     }
@@ -32,8 +39,10 @@ try{
         return;
     }
     else{
-        $insertQuery = "INSERT INTO `users`(`username`, `email`, `password`, `firstName`, `lastName`, `location`) VALUES ('$username', '$email', '$hashPass', '$firstName', '$lastName', '$location');";
-        $GLOBALS["mysqli"]->query($insertQuery);
+        $insertQuery = "INSERT INTO `users`(`username`, `email`, `password`, `firstName`, `lastName`, `location`) VALUES (?, ?, ?, ?, ?, ?);";
+        $stmt = $GLOBALS["mysqli"]->prepare($insertQuery);
+        $stmt->bind_param('ssssss', $username, $email, $hashPass, $firstName, $lastName, $location);
+        $stmt->execute();
         $newUser = true;
     }
     

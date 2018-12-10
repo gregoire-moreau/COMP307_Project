@@ -4,25 +4,11 @@ $app = new Slim\App;
 require_once('dbaccess.php');
 
 $app->get('/', function ($request, $response) {
-    if(!isSet($_COOKIE['SessionID'])){
-        include 'ABNBHome.html';
-        return $response;
+    if (checkSessionID()){
+        include 'main.html';
     }
     else{
-        $checkCookieQuery = "SELECT uname FROM sessions WHERE SessionID='".$_COOKIE['SessionID']."';";
-        $result  = $GLOBALS['mysqli']->query($checkCookieQuery);
-        $data = NULL;
-        while($row =  $result->fetch_assoc()){
-            $data[] = $row;
-        }
-        if($data == NULL){
-            include 'ABNBHome.html';
-            return $response;
-        }
-        else{
-            include 'main.html';
-            return $response;
-        }
+        include 'ABNBHome.html';
     }
 });
 
@@ -44,8 +30,10 @@ $app->post('/login', function($request, $response) {
     require_once('login.php');
     if($success){
         $newID = randomString();
-        $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', '$username') ON DUPLICATE KEY UPDATE SessionID = VALUES(SessionID); ";
-        $GLOBALS['mysqli']->query($sessionQuery);
+        $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', ?) ON DUPLICATE KEY UPDATE SessionID = VALUES(SessionID); ";
+        $stmt = $GLOBALS['mysqli']->prepare($sessionQuery);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
         setCookie("SessionID", $newID, false, "/", false);
         echo '{"status":true}';
     }
@@ -57,32 +45,18 @@ $app->post('/profile', function($request, $response) {
     }
 });
 
-$app->post('/upload', function($request, $response) {
+$app->post('/receive_image', function($request, $response) {
     if (checkSessionID()){
         require_once('receive_image.php');
     }
 });
 
-$app->post('/query', 'retrieve');
-function retrieve(){
-    require_once('dbaccess.php');
-    $query = $_POST['query'];
-    try{
-        $result = $mysqli->query($query);
-        while($row =  $result->fetch_assoc()){
-            $data[] = $row;
-        }
-        if (isset($data)){
-            echo json_encode($data);
-        }
-    }catch (Exception $e) {
-        echo 'Exception reçue : ',  $e->getMessage(), "\n";
-    }
-}
 
 $app->get('/logout', function($request, $response){
-    $query = "DELETE FROM sessions WHERE SessionID = '".$_COOKIE['SessionID']."';";
-    $GLOBALS['mysqli']->query($query);
+    $query = "DELETE FROM sessions WHERE SessionID = ?;";
+    $stmt = $GLOBALS['mysqli']->prepare($query);
+    $stmt->bind_param('s', $_COOKIE['SessionID']);
+    $stmt->execute();
     setcookie("SessionID", "", time()-3600);
     include 'ABNBHome.html';
     return $response;
@@ -90,7 +64,7 @@ $app->get('/logout', function($request, $response){
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    require_once('receive_image.php');
+    echo checkSessionID();
 });
 
 function checkField($fieldVal){
@@ -102,14 +76,16 @@ function checkSessionID(){
         return false;
     }
     else {
-        $checkCookieQuery = "SELECT uname FROM sessions WHERE SessionID='".$_COOKIE['SessionID']."';";
-        $result  = $GLOBALS['mysqli']->query($checkCookieQuery);
+        $checkCookieQuery = "SELECT uname FROM sessions WHERE SessionID=?;";
+        $stmt = $GLOBALS['mysqli']->prepare($checkCookieQuery);
+        $stmt->bind_param('s', $_COOKIE['SessionID']);
+        $stmt->execute();
+        $result = $stmt->get_result();
         $data = NULL;
         while($row =  $result->fetch_assoc()){
             $data[] = $row;
         }
         if($data == NULL){
-            include 'ABNBHome.html';
             return false;
         }
         else{
