@@ -4,7 +4,7 @@ $dogAge = $dataSignup['age'];
 $breed = $dataSignup['breed'];
 try{
     $dogInsertQuery = "INSERT INTO `dogs`(`Name`, `Age`, `owner`, `breed`) VALUES ('$dogName',$dogAge,'$username','$breed');";
-    $mysqli->query($dogInsertQuery);    
+    $GLOBALS["mysqli"]->query($dogInsertQuery);    
     $toRet["status"] = true;
     echo json_encode($toRet);
     return;
