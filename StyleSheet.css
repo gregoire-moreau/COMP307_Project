@@ -119,3 +119,24 @@ a.side:hover{color: #2ce8db}
     width: 300px; 
     height: 300px; 
 }
+
+/* small view of other dogs profiles*/
+.grid-item{
+    
+    box-sizing: border-box;
+    box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    background-color: white; 
+    width: 200px; 
+    height: 200px; 
+    padding: 20px 20px;
+    margin-left: 200px; 
+    text-align: center;
+    border-radius: 8px; 
+    
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 300px 300px 300px; 
+  padding: 10px;
+}
