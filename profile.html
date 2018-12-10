@@ -79,27 +79,32 @@
             a.side:hover{color: #2ce8db}
         </style>
         
-        <script>
-            var data;
-            var obj;
-        </script>
         <script src="scripts/load.js"></script>
         <script src="scripts/json.js"></script>
         <script>
-            function loadData() {
-                document.getElementById("dname").innerHTML = obj.dname;
-                document.getElementById("breed").innerHTML = obj.breed;
-                document.getElementById("age").innerHTML = obj.age;
-                document.getElementById("act1").innerHTML = obj.act1;
-                document.getElementById("act2").innerHTML = obj.act2;
-                document.getElementById("act3").innerHTML = obj.act3;
+            function requestReceived() {
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        // server response string goes into data
+                        var data = JSON.parse(request.responseText);
+                        document.getElementById("fname").innerHTML = data.fname;
+                        document.getElementById("dname").innerHTML = data.dname;
+                        document.getElementById("breed").innerHTML = data.breed;
+                        document.getElementById("age").innerHTML = data.age;
+                        document.getElementById("act1").innerHTML = data.act1;
+                        document.getElementById("act2").innerHTML = data.act2;
+                        document.getElementById("act3").innerHTML = data.act3;
+                    } else {
+                        alert("Something went wrong. Profile could not be loaded.");
+                    }
+                }
             }
         </script>
 	</head> 
 	
-	<body onload="load()">
+	<body onload="load('profile')">
 		<div class="sidebar">
-            Welcome, <span id="uname">User</span>!
+            Welcome, <span id="fname">User</span>!
             <br/>
             <br/>
             <a class="side" href="main.html">Main Page</a>
@@ -128,7 +133,7 @@
             <br/>
             Activity 3: <span id="act3"></span>
             <br/>
-            <button onclick="loadData()">Test</button>
+            <button onclick="load('profile')">Test</button>
         </div>
         
 	</body>
