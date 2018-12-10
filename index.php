@@ -29,7 +29,15 @@ $app->post('/login', function($request, $response) {
     $success = false;
     require_once('login.php');
     if($success){
-        $newID = randomString();
+        do{
+            $newID = randomString();
+            $checkQuery = "SELECT * FROM sessions WHERE SessionID = '$newID'";
+            $result = $GLOBALS['mysqli']->query($checkQuery);
+            $data = NULL;
+            while($row =  $result->fetch_assoc()){
+                $data[] = $row;
+            }
+        } while($data != NULL);
         $sessionQuery = "INSERT INTO sessions(SessionID, uname) VALUES ('$newID', ?) ON DUPLICATE KEY UPDATE SessionID = VALUES(SessionID); ";
         $stmt = $GLOBALS['mysqli']->prepare($sessionQuery);
         $stmt->bind_param('s', $username);
@@ -52,6 +60,12 @@ $app->post('/receive_image', function($request, $response) {
     }
 });
 
+$app->post('/friends', function($request, $response) {
+    if (checkSessionID()){
+        require_once('friends.php');
+    }
+});
+
 
 $app->get('/logout', function($request, $response){
     $query = "DELETE FROM sessions WHERE SessionID = ?;";
@@ -65,7 +79,7 @@ $app->get('/logout', function($request, $response){
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    file_put_contents("test.log", "here");
+    require_once('friends.php');
 });
 
 function checkField($fieldVal){

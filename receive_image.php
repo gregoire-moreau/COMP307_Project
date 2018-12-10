@@ -11,7 +11,16 @@ if(isset($_FILES['files'])){
         $file_size = $_FILES['files']['size'][$i];
         $tmp = explode('.', $_FILES['files']['name'][$i]);
         $file_ext = strtolower(end($tmp));
-        $file_name = randomString().'.'.$file_ext;
+        do{
+            $file_name = randomString().'.'.$file_ext;
+            $checkQuery = "SELECT * FROM dogs WHERE image= '$file_name'";
+            $result = $GLOBALS['mysqli']->query($checkQuery);
+            $data = NULL;
+            while($row =  $result->fetch_assoc()){
+                $data[] = $row;
+            }
+        }
+        while($data !=NULL );
         $file = $path . $file_name;
 
         if (!in_array($file_ext, $extensions)) {
