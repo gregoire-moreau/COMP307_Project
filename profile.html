@@ -41,7 +41,7 @@
                 font-size: 1.5em;
                 
                 margin: auto;
-                margin-top: 8%;
+                margin-top: 5%;
                 text-align: left;
                 width: 55%;
                 height: 450px;
@@ -84,8 +84,13 @@
                 box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
                 width: 300px; 
                 height: 300px; 
-                padding: 10px 20px;
-                border-radius: 8px;
+                padding: 0px;
+                
+            }
+            
+            .autoresize{
+                width: 300px; 
+                height: 300px; 
             }
             
         </style>
@@ -106,6 +111,8 @@
                         document.getElementById("act1").innerHTML = data.act1;
                         document.getElementById("act2").innerHTML = data.act2;
                         document.getElementById("act3").innerHTML = data.act3;
+                        document.getElementById("photo").setAttribute("src", "uploads/"+data.image);
+                        
                     } else {
                         alert("Something went wrong. Profile could not be loaded.");
                     }
@@ -121,9 +128,12 @@
                     formData.append('files[]', file); 
                     
                     fetch("./receive_image", { method: 'POST', body: formData}).then(response => {console.log(response);});
+                    
                     return false;
+                
+                
             }
-    
+          
             
         </script>
 	</head> 
@@ -151,7 +161,8 @@
             
             <div style="float: right">
                  <div class="photo">
-                <img id="photo" src="uploads/dog.png" >
+                     <img class="autoresize" id="photo" src="uploads/dog.png" style="width: 100%; height: 100%" >
+                    
             
                 </div>
 
