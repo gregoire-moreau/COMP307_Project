@@ -110,10 +110,10 @@ function checkSessionID(){
         }
         if($data == NULL){
             include 'ABNBHome.html';
-            return $false;
+            return false;
         }
         else{
-            return $true;
+            return true;
         }
     }
 }
