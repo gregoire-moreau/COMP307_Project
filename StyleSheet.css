@@ -38,7 +38,7 @@ body {
 }
 
 /* inputs formatted in theme*/
-input[type=text],[type=number],[type=password], select{
+input[type=text],[type=number],[type=password], select, textarea{
     box-sizing: border-box;
     box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
     border: 1px solid #2ce8db;  
