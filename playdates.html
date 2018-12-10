@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html> 
+	<head> 
+        <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
+
+        <script src="scripts/load.js"></script>
+        <script src="scripts/json.js"></script>
+        <script src="scripts/profile.js"></script>
+        <script>
+            function requestReceived() {
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        // server response string goes into data
+                        var data = JSON.parse(request.responseText);
+                        document.getElementById("fname").innerHTML = data.fname;
+                        /*document.getElementById("dname").innerHTML = data.dname;
+                        document.getElementById("name").innerHTML = data.dname; 
+                        document.getElementById("breed").innerHTML = data.breed;
+                        document.getElementById("age").innerHTML = data.age;
+                        document.getElementById("act1").innerHTML = data.act1;
+                        document.getElementById("act2").innerHTML = data.act2;
+                        document.getElementById("act3").innerHTML = data.act3;
+                        document.getElementById("photo").setAttribute("src", "uploads/"+data.image);*/
+                        
+                    } else {
+                        alert("Something went wrong. Playdates could not be loaded.");
+                    }
+                }
+            }
+          
+            
+        </script>
+	</head> 
+	
+	<body onload="load('playdates')">
+		<div class="sidebar">
+            Welcome, <span id="fname">User</span>!
+            <br/>
+            <br/>
+            <a class="side" href="main.html">Main Page</a>
+            <br/>
+            <a class="side" href="profile.html">Profile</a>
+            <br/>
+            <a class="side" href="friends.html">Friends</a>
+            <br/>
+            <a class="side" href="playdates.html">Playdates</a>
+            <br/>
+            <br/>
+            <a class="side" href="logout">Logout</a>
+        </div>
+        <br/>
+        
+        <div id="Grid" class="grid-container"> 
+               <div id="r1" class="grid-item">
+                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
+                    <br>
+                    <span >Name</span>
+                    <br>
+                    <button class="form" style="font-size: .6em"> View </button>
+                    <button class="form" style="font-size: .6em"> Schedule </button>
+               </div>
+               <div id="r2" class="grid-item">
+                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
+                    <br>
+                    <span >Name</span>
+                    <br>
+                    <button class="form" style="font-size: .6em"> View </button>
+                    <button class="form" style="font-size: .6em"> Schedule </button>
+               </div>
+               <div id="r3" class="grid-item">
+                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
+                    <br>
+                    <span >Name</span>
+                    <br>
+                    <button class="form" style="font-size: .6em"> View </button>
+                    <button class="form" style="font-size: .6em"> Schedule </button>
+               </div>
+              
+           </div>
+        
+	</body>
+</html> 

@@ -3,14 +3,56 @@
     <head> 
         <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
         
+        <script src="scripts/load.js"></script>
+        <script src="scripts/json.js"></script>
+        <script src="scripts/profile.js"></script>
         <script>
+            function requestReceived() {
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        // server response string goes into data
+                        var data = JSON.parse(request.responseText);
+                        document.getElementById("fname").innerHTML = data.fname;
+                        document.getElementById("dname").innerHTML = data.dname;
+                    } else {
+                        alert("Something went wrong. Friends could not be loaded.");
+                    }
+                }
+            }
             
+            function addBox(id, name) {
+                var div = document.createElement('div');
+                div.setAttribute('id', id);
+                div.setAttribute('class','grid-item');
+                document.getElementById("FriendGrid").appendChild(div);
+                var img = document.createElement('img');
+                img.setAttribute('src',"uploads/dog.png");
+                img.setAttribute('style',"padding-left: 10%; width: 100px; height: 100px");
+                div.appendChild(img);
+                var br = document.createElement('br');
+                //div.appendChild(br);
+                var span = document.createElement('span');
+                span.createTextNode(name);
+                div.appendChild(span);
+                br = document.createElement('br');
+                div.appendChild(br);
+                var b1 = document.createElement('button');
+                b1.createTextNode("View");
+                b1.setAttribute('class','form');
+                b1.setAttribute('style',"font-size: .6em");
+                div.appendChild(b1);
+                var b2 = document.createElement('button');
+                b2.createTextNode("Playdate");
+                b2.setAttribute('class','form');
+                b2.setAttribute('style',"font-size: .6em");
+                div.appendChild(b2);
+            }    
             
         </script>
         
     </head>
 
-   <body onload="load()">
+   <body onload="load(friends)">
        
 		<div class="sidebar">
             Welcome, <span id="uname">User</span>!
@@ -26,11 +68,12 @@
             <br/>
             <br/>
             <a class="side" href="logout">Logout</a>
-
+            
+            <br><button onclick="addBox('ff','Zip')">Test</button>
         </div>
         <br/>
        
-       <div id="myfriends" class="theme" style="text-align: left" > 
+        <div id="myfriends" class="theme" style="text-align: left" > 
            <div style="margin-left: 18%; font-weight: 700; font-size: 1.5em">
                 <span id="dname">Dog</span>'s Friends: 
            </div>
@@ -64,7 +107,7 @@
                     <button class="form" style="font-size: .75em; width: 150px; height: 50px;  "> View All Friends </button>
               </div>
                
-           </div>
+            </div>
        </div>
        
        <div id="barkrequests" class="theme" style="text-align: left"> 
