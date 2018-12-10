@@ -6,34 +6,6 @@ $firstName = $dataSignup['fname'];
 $lastName = $dataSignup['lname'];
 $location = $dataSignup['location'];
 
-if(strpos($username, " ") >-1){ //To avoid sql injection
-    $toRet["status"] = false;
-    $toRet["field"] = "uname";
-    $toRet["errorMessage"] = "Username should be in one word";
-    echo json_encode($toRet);
-    return;
-}
-if(strpos($email, " ") >-1){
-    $toRet["status"] = false;
-    $toRet["field"] = "email";
-    $toRet["errorMessage"] = "Email shouldn't contain spaces";
-    echo json_encode($toRet);
-    return;
-}
-if(str_word_count($hashPass) >1){
-    $toRet["status"] = false;
-    $toRet["field"] = "password";
-    $toRet["errorMessage"] = "Password shouldn't contain spaces";
-    echo json_encode($toRet);
-    return;
-}
-if(!checkField($username) ||  !checkField($email) || !checkField($hashPass)){
-    $toRet["status"] = false;
-    $toRet["field"] = "all";
-    $toRet["errorMessage"] = "One of the required fields is empty, probably checked in javascript";
-    echo json_encode($toRet);
-    return;
-}
 $uNameQuery = "SELECT COUNT(username) FROM users WHERE username = '$username' ;";
 $emailQuery = "SELECT COUNT(email) FROM users WHERE email = '$email' ;";
 try{
