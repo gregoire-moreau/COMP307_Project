@@ -12,7 +12,7 @@
                     if (request.responseText != null) {
                         // server response string goes into data
                         var data = JSON.parse(request.responseText);
-                        document.getElementById("fname").innerHTML = data.fname;
+                        //document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("dname").innerHTML = data.dname;
                     } else {
                         alert("Something went wrong. Friends could not be loaded.");

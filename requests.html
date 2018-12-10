@@ -15,14 +15,23 @@
                     if (request.responseText != null) {
                         // server response string goes into data
                         var data = JSON.parse(request.responseText);
-                        document.getElementById("fname").innerHTML = data.fname;
-                        if (data.pendingRequests.length < 1) {
+                        //document.getElementById("fname").innerHTML = data.fname;
+                        if (data.pendingRequests != null) {
+                            
+                        } else {
                             document.getElementById("RequestsGrid").style.display = "none";
                             var txt = document.createTextNode("You do not have any bark requests.");
                             document.getElementById("barkrequests").appendChild(txt);
                         }
+                        if (data.otherDogs != null) {
+                            
+                        } else {
+                            document.getElementById("SuggestionsGrid").style.display = "none";
+                            var txt = document.createTextNode("No unfriended dogs in your location.");
+                            document.getElementById("suggestedfriends").appendChild(txt);
+                        }
                     } else {
-                        alert("Something went wrong. Friends could not be loaded.");
+                        alert("Something went wrong. Requests could not be loaded.");
                     }
                 }
             }
