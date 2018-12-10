@@ -46,6 +46,7 @@ $app->post('/profile', function($request, $response) {
 });
 
 $app->post('/receive_image', function($request, $response) {
+    file_put_contents("test.log", "heddre");
     if (checkSessionID()){
         require_once('receive_image.php');
     }
@@ -64,7 +65,7 @@ $app->get('/logout', function($request, $response){
 
 $app->get('/test', function($request, $response){
     //require_once('dbaccess.php');
-    echo checkSessionID();
+    file_put_contents("test.log", "here");
 });
 
 function checkField($fieldVal){

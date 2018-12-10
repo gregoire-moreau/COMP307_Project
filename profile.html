@@ -112,10 +112,7 @@
                 }
             }
             
-            const url = 'receive_image';
-                const form = document.querySelector('form');
-                form.addEventListener('submit', e=> {
-                    e.preventDefault();
+            function imagePost(){
                     
                     const files = document.querySelector('[type=file]').files;
                     const formData = new FormData();
@@ -123,8 +120,9 @@
                     let file = files[0]; 
                     formData.append('files[]', file); 
                     
-                    fetch(url, { method: 'POST', body: formData}).then(response => {console.log(response);});
-                });
+                    fetch("./receive_image", { method: 'POST', body: formData}).then(response => {console.log(response);});
+                    return false;
+            }
     
             
         </script>
@@ -158,7 +156,7 @@
                 </div>
 
                 <div >
-                    <form style="text-align: right" method="post" enctype="multipart/form-data">
+                    <form onsubmit = "return imagePost()" style="text-align: right" method="post" enctype="multipart/form-data">
                         <br>
                         <input type="file" name="file[]" style="border: .25px solid black; outline: none"  >
                         <br>
