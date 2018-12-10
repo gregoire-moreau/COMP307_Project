@@ -1,0 +1,121 @@
+
+/* Background theme for all webpages*/
+body {
+    background-image: url("images/paw-3.jpg");
+    background-position: 50% 50%;
+    background-repeat: repeat;
+}
+
+/* Big text for login/welcome page*/
+.maintext {
+    padding-top: 8%; 
+    font-family: "Courier New", monospace; 
+    font-weight: 600; 
+    font-size: 8em; 
+    color: #2ce8db; 
+    text-align: center; 
+    text-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+}
+
+/* Big container for login/welcome page*/
+.container {
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    padding: 20px;
+    text-align: center; 
+    font-family: "Courier New", monospace; 
+    font-size: 2em; 
+    margin-left: 35%; 
+    margin-right: 35%; 
+    margin-top: 4%; 
+}
+
+.errorMsg{
+    font-weight: bold;
+    font-size: 0.5em;
+    color: red;
+}
+
+/* inputs formatted in theme*/
+input[type=text],[type=number],[type=password], select{
+    box-sizing: border-box;
+    box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    border: 1px solid #2ce8db;  
+    padding: 10px 20px; 
+    border-radius: 8px;
+    outline: none;
+}
+
+/*links*/
+a.link:link {color: black; background-color: transparent}
+a.link:visited {color: inherit}
+a.link:hover{color: #2ce8db}
+a.side:link {color: black; background-color: transparent; text-decoration: none}
+a.side:visited {color: inherit}
+a.side:hover{color: #2ce8db}
+
+/* standard theme for text*/ 
+.theme{
+    font-family: "Courier New", monospace; 
+    font-size: 1.5em;
+    text-align: center;
+    padding-left: 10%; 
+    padding-right: 10%; 
+    padding-top: 2%; 
+    padding-bottom: 2%; 
+}
+
+.form{
+    font-family: "Courier New", monospace; 
+    font-size: 1em;
+}
+
+/*side menu bar*/
+.sidebar {
+    font-family: "Courier New", monospace; 
+    font-size: 1.5em;
+    text-align: left;
+    float: left;
+    margin-left: 0%;
+    position: fixed; 
+    width: 12%;
+    background-color: white;
+    border-radius: 0px 0px 8px 0px; 
+    box-shadow: 1px 1px 1px black, 0 0 25px #218287, 0 0 5px #144760; 
+    padding-left: 3%; 
+    padding-right: 3%; 
+    padding-top: 3%; 
+    padding-bottom: 3%;
+}
+
+.profile {
+    font-family: "Courier New", monospace; 
+    font-size: 1.5em;
+    margin: auto;
+    margin-top: 5%;
+    text-align: left;
+    width: 55%;
+    height: 450px;
+    margin-left: 25%; 
+    background-color: white;
+    border-radius: 8px; 
+    box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; 
+    padding-left: 5%; 
+    padding-right: 5%; 
+    padding-top: 5%; 
+    padding-bottom: 5%; 
+}
+
+.photo{
+    box-sizing: border-box;
+    box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    width: 300px; 
+    height: 300px; 
+    padding: 0px;
+}
+
+.autoresize{
+    width: 300px; 
+    height: 300px; 
+}
