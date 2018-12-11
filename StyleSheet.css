@@ -38,7 +38,7 @@ body {
 }
 
 /* inputs formatted in theme*/
-input[type=text],[type=number],[type=password], select, textarea, .rect{
+input[type=text],[type=number],[type=password],[type=date], select, textarea{
     box-sizing: border-box;
     box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
     border: 1px solid #2ce8db;  
@@ -83,8 +83,8 @@ a.side:hover{color: #2ce8db}
     background-color: white;
     border-radius: 8px 8px 8px 8px; 
     box-shadow: 1px 1px 1px black, 0 0 25px #218287, 0 0 5px #144760; 
-    padding-left: 3%; 
-    padding-right: 3%; 
+    padding-left: 2%; 
+    padding-right: 2%; 
     padding-top: 3%; 
     padding-bottom: 3%;
 }
@@ -151,10 +151,9 @@ a.mainbutton{
     border: 1px solid #2ce8db;  
     padding: 10px 20px; 
     border-radius: 8px;
-    outline: none;
-   
+    outline: none; 
     font-family: "Courier New", monospace; 
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: 300; 
 }
 a.mainbutton:link{color: black; text-decoration: none}
