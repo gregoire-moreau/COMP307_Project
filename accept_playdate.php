@@ -15,7 +15,7 @@ if ($dogData["answer"] == "true"){
     }
     $query = "UPDATE playdates SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
 }else{
-    if($data == NULL){
+    if($data == NULL || $data[0]["accepted"]){
         echo '{"status":false}';
         return;
     }
