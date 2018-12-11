@@ -19,14 +19,14 @@
                         if (data.pendingRequests != null) {
                             indexReq = 0;
                             var req = data.pendingRequests[indexReq];
-                            replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image);
+                            replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image, indexReq);
                             indexReq++;
                             if (indexReq >= data.pendingRequests.length) {
                                 document.getElementById('r2').style.display = "none";   
                                 document.getElementById("morerequests").style.display = "none";
                             } else {
                                 var req = data.pendingRequests[indexReq];
-                                replaceBox("RequestsGrid",'r2',req.id,req.dname,req.image);
+                                replaceBox("RequestsGrid",'r2',req.id,req.dname,req.image, indexReq);
                             }
                             indexReq++;
                             if (indexReq >= data.pendingRequests.length) {
@@ -34,7 +34,7 @@
                                 document.getElementById("morerequests").style.display = "none";
                             } else {
                                 var req = data.pendingRequests[indexReq];
-                                replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image);
+                                replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image, indexReq);
                             }
                             indexReq++;
                             if (indexReq >= data.pendingRequests.length) {
@@ -49,14 +49,14 @@
                         if (data.otherDogs != null) {
                             indexSug = 0;
                             var sug = data.otherDogs[indexSug];
-                            replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image);
+                            replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image, indexSug);
                             indexSug++;
                             if (indexSug >= data.otherDogs.length) {
                                 document.getElementById('s2').style.display = "none";   
                                 document.getElementById("moresuggestions").style.display = "none";
                             } else {
                                 var sug = data.otherDogs[indexSug];
-                                replaceBox("SuggestionsGrid",'s2',sug.id,sug.dname,sug.image);
+                                replaceBox("SuggestionsGrid",'s2',sug.id,sug.dname,sug.image, indexSug);
                             }
                             indexSug++;
                             if (indexSug >= data.otherDogs.length) {
@@ -64,7 +64,7 @@
                                 document.getElementById("moresuggestions").style.display = "none";
                             } else {
                                 var sug = data.otherDogs[indexSug];
-                                replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image);
+                                replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image, indexSug);
                             }
                             indexSug++;
                             if (indexSug >= data.otherDogs.length) {
@@ -86,14 +86,14 @@
             
             function moreRequests() {
                 var req = data.pendingRequests[indexReq];
-                replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image);
+                replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image, indexReq);
                 indexReq++;
                 if (indexReq >= data.pendingRequests.length) {
                     document.getElementById('r2').style.display = "none";   
                     document.getElementById("morerequests").style.display = "none";
                 } else {
                     var req = data.pendingRequests[indexReq];
-                    replaceBox("RequestsGrid",'r2',req.id,req.dname,req.image);
+                    replaceBox("RequestsGrid",'r2',req.id,req.dname,req.image, indexReq);
                 }
                 indexReq++;
                 if (indexReq >= data.pendingRequests.length) {
@@ -101,7 +101,7 @@
                     document.getElementById("morerequests").style.display = "none";
                 } else {
                     var req = data.pendingRequests[indexReq];
-                    replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image);
+                    replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image, indexReq);
                 }
                 indexReq++;
                 if (indexReq >= data.pendingRequests.length) {
@@ -111,14 +111,14 @@
             
             function moreSuggestions() {
                 var sug = data.otherDogs[indexSug];
-                replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image);
+                replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image, indexSug);
                 indexSug++;
                 if (indexSug >= data.otherDogs.length) {
                     document.getElementById('s2').style.display = "none";   
                     document.getElementById("moresuggestions").style.display = "none";
                 } else {
                     var sug = data.otherDogs[indexSug];
-                    replaceBox("SuggestionsGrid",'s2',sug.id,sug.dname,sug.image);
+                    replaceBox("SuggestionsGrid",'s2',sug.id,sug.dname,sug.image, indexSug);
                 }
                 indexSug++;
                 if (indexSug >= data.otherDogs.length) {
@@ -126,7 +126,7 @@
                     document.getElementById("moresuggestions").style.display = "none";
                 } else {
                     var sug = data.otherDogs[indexSug];
-                    replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image);
+                    replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image, indexSug);
                 }
                 indexSug++;
                 if (indexSug >= data.otherDogs.length) {
@@ -136,13 +136,13 @@
             
             // grid id, box id, dog id, dog name, dog image
             // USE: called from replaceBox()
-            function createBox(grid, box, id, name, image) {
+            function createBox(grid, box, id, name, image, i) {
                 var div = document.createElement('div');
                 div.setAttribute('id', box);
                 div.setAttribute('class','grid-item');         
                 var img = document.createElement('img');
                 img.setAttribute('src',"uploads/"+image);
-                img.setAttribute('style',"padding-left: 10%; width: 100px; height: 100px");
+                img.setAttribute('style',"width: 100px; height: 100px");
                 div.appendChild(img);
                 var br = document.createElement('br');
                 div.appendChild(br);
@@ -157,6 +157,7 @@
                 b1.appendChild(txt);
                 b1.setAttribute('class','form');
                 b1.setAttribute('style',"font-size: .6em");
+                b1.setAttribute("onclick", "return helper("+i+","+grid+")"); 
                 div.appendChild(b1);
                 var b2 = document.createElement('button');
                 if (grid == "RequestsGrid") {
@@ -183,10 +184,37 @@
                 return div;
             }
             
+            
             // grid id, box id, dog id, dog name, dog image
-            function replaceBox(grid, box, id, name, image) {
-                var div = createBox(grid, box, id, name, image);
+            function replaceBox(grid, box, id, name, image, i) {
+                var div = createBox(grid, box, id, name, image, i);
                 document.getElementById(grid).replaceChild(div, document.getElementById(box));
+            }
+            
+            function helper(i, type){
+                if(type == "RequestsGrid"){
+                
+                    var name = data.pendingRequests[i].dname; 
+                    var age = data.pendingRequests[i].age;
+                    var breed = data.pendingRequests[i].breed;
+                    var a1 = data.pendingRequests[i].act1;
+                    var a2 = data.pendingRequests[i].act2; 
+                    var a3 = data.pendingRequests[i].act3; 
+                    var image = data.pendingRequests[i].image; 
+                    showProfile(name, breed, age, a1, a2, a3, image); 
+                }
+                else{
+                    var name = data.otherDogs[i].dname; 
+                    var age = data.otherDogs[i].age;
+                    var breed = data.otherDogs[i].breed;
+                    var a1 = data.otherDogs[i].act1;
+                    var a2 = data.otherDogs[i].act2; 
+                    var a3 = data.otherDogs[i].act3; 
+                    var image = data.otherDogs[i].image; 
+                    showProfile(name, breed, age, a1, a2, a3, image); 
+                }
+                
+                
             }
             
             var bark;
