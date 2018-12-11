@@ -14,7 +14,7 @@
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
                         // server response string goes into data
-                        var data = JSON.parse(request.responseText);
+                        data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
                         if (data.pendingRequests != null) {
                             indexReq = 0;
@@ -36,7 +36,10 @@
                                 var req = data.pendingRequests[indexReq];
                                 replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image);
                             }
-                            indexReq++;    
+                            indexReq++;
+                            if (indexReq >= data.pendingRequests.length) {
+                                document.getElementById("morerequests").style.display = "none";
+                            }
                         } else {
                             document.getElementById("RequestsGrid").style.display = "none";
                             var txt = document.createTextNode("You do not have any bark requests.");
@@ -63,17 +66,74 @@
                                 var sug = data.otherDogs[indexSug];
                                 replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image);
                             }
-                            indexSug++;    
+                            indexSug++;
+                            if (indexSug >= data.otherDogs.length) {
+                                document.getElementById("moresuggestions").style.display = "none";
+                            }
                         } else {
                             document.getElementById("SuggestionsGrid").style.display = "none";
                             var txt = document.createTextNode("No unfriended dogs in your location.");
                             document.getElementById("suggestedfriends").appendChild(txt);
                         }
+                        
+                        pendingRequests = data.pendingRequests;
+                        otherDogs = data.otherDogs;
                     } else {
                         alert("Something went wrong. Requests could not be loaded.");
                     }
                 }
             }
+            
+            function moreRequests() {
+                var req = data.pendingRequests[indexReq];
+                replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image);
+                indexReq++;
+                if (indexReq >= data.pendingRequests.length) {
+                    document.getElementById('r2').style.display = "none";   
+                    document.getElementById("morerequests").style.display = "none";
+                } else {
+                    var req = data.pendingRequests[indexReq];
+                    replaceBox("RequestsGrid",'r2',req.id,req.dname,req.image);
+                }
+                indexReq++;
+                if (indexReq >= data.pendingRequests.length) {
+                    document.getElementById('r3').style.display = "none";
+                    document.getElementById("morerequests").style.display = "none";
+                } else {
+                    var req = data.pendingRequests[indexReq];
+                    replaceBox("RequestsGrid",'r3',req.id,req.dname,req.image);
+                }
+                indexReq++;
+                if (indexReq >= data.pendingRequests.length) {
+                    document.getElementById("morerequests").style.display = "none";
+                }
+            }
+            
+            function moreSuggestions() {
+                var sug = data.otherDogs[indexSug];
+                replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image);
+                indexSug++;
+                if (indexSug >= data.otherDogs.length) {
+                    document.getElementById('s2').style.display = "none";   
+                    document.getElementById("moresuggestions").style.display = "none";
+                } else {
+                    var sug = data.otherDogs[indexSug];
+                    replaceBox("SuggestionsGrid",'s2',sug.id,sug.dname,sug.image);
+                }
+                indexSug++;
+                if (indexSug >= data.otherDogs.length) {
+                    document.getElementById('s3').style.display = "none";
+                    document.getElementById("moresuggestions").style.display = "none";
+                } else {
+                    var sug = data.otherDogs[indexSug];
+                    replaceBox("SuggestionsGrid",'s3',sug.id,sug.dname,sug.image);
+                }
+                indexSug++;
+                if (indexSug >= data.otherDogs.length) {
+                    document.getElementById("moresuggestions").style.display = "none";
+                }
+            }
+            
             // grid id, box id, dog id, dog name, dog image
             // USE: called from replaceBox()
             function createBox(grid, box, id, name, image) {
@@ -151,9 +211,6 @@
             <br/>
             <br/>
             <a class="side" href="logout">Logout</a>
-            
-            <br><button onclick="replaceBox('RequestsGrid','r1',1,'Zip','dog.png')">Test</button>
-            <br><button onclick="replaceBox('RequestsGrid','r2',2,'Rem','dog.png')">Test2</button>
         </div>
         <br/>
        
@@ -188,7 +245,7 @@
                     <button class="form" style="font-size: .6em"> Ignore </button>
                </div>
                <div id="morerequests" style="margin-left: 55%; margin-top: 25%">
-                    <button class="form" style="font-size: .75em; width: 150px; height: 50px;  "> View Other Requests </button>
+                    <button onclick="moreRequests()" class="form" style="font-size: .75em; width: 150px; height: 50px;  "> View Other Requests </button>
               </div>
                
            </div>
@@ -226,7 +283,7 @@
                     <button class="form" style="font-size: .6em"> Ignore </button>
                </div>
                <div id="moresuggestions" style="margin-left: 55%; margin-top: 25%">
-                    <button class="form" style="font-size: .75em; width: 150px; height: 75px;  "> View Other Suggested Friends </button>
+                    <button onclick="moreSuggestions()" class="form" style="font-size: .75em; width: 150px; height: 75px;  "> View Other Suggested Friends </button>
               </div>
                
            </div>
