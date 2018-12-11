@@ -42,7 +42,7 @@
                             }
                         } else {
                             document.getElementById("RequestsGrid").style.display = "none";
-                            var txt = document.createTextNode("You do not have any bark requests.");
+                            document.getElementById("nobarks").innerHTML = "You do not have any bark requests.";
                             document.getElementById("barkrequests").appendChild(txt);
                         }
                         
@@ -72,7 +72,7 @@
                             }
                         } else {
                             document.getElementById("SuggestionsGrid").style.display = "none";
-                            var txt = document.createTextNode("No unfriended dogs in your location.");
+                            document.getElementById("nosuggestions").innerHTML = "No unfriended dogs in your location.";
                             document.getElementById("suggestedfriends").appendChild(txt);
                         }
                         
@@ -138,19 +138,24 @@
             function createBox(grid, box, id, name, image, i) {
                 var div = document.createElement('div');
                 div.setAttribute('id', box);
-                div.setAttribute('class','grid-item');         
+                div.setAttribute('class','grid-item');    
+                
                 var img = document.createElement('img');
                 img.setAttribute('src',"uploads/"+image);
                 img.setAttribute('style',"width: 100px; height: 100px");
                 div.appendChild(img);
+                
                 var br = document.createElement('br');
                 div.appendChild(br);
+                
                 var span = document.createElement('span');
                 var txt = document.createTextNode(name);
                 span.appendChild(txt);
                 div.appendChild(span);
+                
                 br = document.createElement('br');
                 div.appendChild(br);
+                
                 var b1 = document.createElement('button');
                 txt = document.createTextNode(" View ");
                 b1.appendChild(txt);
@@ -158,6 +163,7 @@
                 b1.setAttribute('style',"font-size: .6em");
                 b1.setAttribute("onclick", "helper("+i+","+grid+")"); 
                 div.appendChild(b1);
+                
                 var b2 = document.createElement('button');
                 if (grid == "RequestsGrid") {
                     txt = document.createTextNode(" Bark Back ");
@@ -170,6 +176,7 @@
                 b2.setAttribute('class','form');
                 b2.setAttribute('style',"font-size: .6em");
                 div.appendChild(b2);
+                
                 if (grid == "RequestsGrid") {
                     var b3 = document.createElement('button');
                     txt = document.createTextNode(" Ignore ");
@@ -289,7 +296,10 @@
         <br/>
        
        <div id="barkrequests" class="theme" style="text-align: left"> 
-           <span style="margin-left: 18%; font-weight: 700; font-size: 1.5em"> Bark Requests:</span>
+            <div style="margin-left: 18%">
+                <span style="font-weight: 700; font-size: 1.5em">Bark Requests:</span> 
+                <span id="nobarks"> </span>
+            </div>
            <div id="RequestsGrid" class="grid-container"> 
                <div id="r1" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
@@ -327,7 +337,10 @@
        </div> 
        
        <div id="suggestedfriends" class="theme" style="text-align: left">
-            <span style="margin-left: 18%; font-weight: 700; font-size: 1.5em"> Suggested Friends:</span>
+            <div style="margin-left: 18%">
+                <span style="font-weight: 700; font-size: 1.5em">Suggested Friends:</span> 
+                <span id="nosuggestions"> </span>
+            </div>
             <div id="SuggestionsGrid" class="grid-container"> 
                <div id="s1" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 

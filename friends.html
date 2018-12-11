@@ -23,8 +23,6 @@
                             
                         } else {
                             document.getElementById("FriendGrid").style.display = "none";
-                            //var txt = document.createTextNode("You do not have any friends yet. Get barking!");
-                            //document.getElementById("myfriends").appendChild(txt);
                             document.getElementById("nofriends").innerHTML = "No friends yet. Get barking!";
                         }
                         
@@ -37,21 +35,25 @@
             // dog id, dog name, dog image
             function addBox(id, name, image, i) {
                 var div = document.createElement('div');
-                //div.setAttribute('id', id);
                 div.setAttribute('class','grid-item');         
                 document.getElementById("FriendGrid").appendChild(div);
+                
                 var img = document.createElement('img');
                 img.setAttribute('src',"uploads/"+image);
                 img.setAttribute('style',"width: 100px; height: 100px");
                 div.appendChild(img);
+                
                 var br = document.createElement('br');
                 div.appendChild(br);
+                
                 var span = document.createElement('span');
                 var txt = document.createTextNode(name);
                 span.appendChild(txt);
                 div.appendChild(span);
+                
                 br = document.createElement('br');
                 div.appendChild(br);
+                
                 var b1 = document.createElement('button');
                 txt = document.createTextNode(" View ");
                 b1.appendChild(txt);
@@ -59,6 +61,7 @@
                 b1.setAttribute('style',"font-size: .6em");
                 b1.setAttribute("onclick", "return helper("+i+")"); 
                 div.appendChild(b1);
+                
                 var b2 = document.createElement('button');
                 txt = document.createTextNode(" Playdate ");
                 b2.appendChild(txt);
@@ -99,44 +102,18 @@
             <br/>
             <br/>
             <a class="side" href="logout">Logout</a>
-            
-            <!--<br><button onclick="addBox('1','Zip','dog.png')">Test</button>-->
         </div>
         <br/>
        
         <div id="myfriends" class="theme" style="text-align: left" > 
-           <div style="margin-left: 18%; font-weight: 700; font-size: 1.5em">
-                <span id="dname">Dog</span>'s Friends: 
+            <div style="margin-left: 18%">
+                <span style="font-weight: 700; font-size: 1.5em">
+                    <span id="dname">Dog</span>'s Friends:
+                </span>
                 <span id="nofriends"> </span>
-           </div>
+            </div>
            
-           
-           <div id="FriendGrid" class="grid-container"> 
-               <!--<div id="f1" class="grid-item">
-                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px >" > 
-                    <br>
-                    <span >Name</span>
-                    <br>
-                    <button class="form" style="font-size: .6em"> View </button>
-                    <button class="form" style="font-size: .6em"> Playdate </button>
-               </div>
-               <div id="f2" class="grid-item">
-                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
-                    <br>
-                    <span >Name</span>
-                    <br>
-                    <button class="form" style="font-size: .6em"> View </button>
-                    <button class="form" style="font-size: .6em"> Playdate </button>
-               </div>
-               <div id="f3" class="grid-item">
-                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
-                    <br>
-                    <span >Name</span>
-                    <br>
-                    <button class="form" style="font-size: .6em"> View </button>
-                    <button class="form" style="font-size: .6em"> Playdate </button>
-               </div>
-               -->
+            <div id="FriendGrid" class="grid-container"> 
             </div>
        </div>
      

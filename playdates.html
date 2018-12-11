@@ -14,19 +14,91 @@
                         // server response string goes into data
                         var data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
-                        /*document.getElementById("dname").innerHTML = data.dname;
-                        document.getElementById("name").innerHTML = data.dname; 
-                        document.getElementById("breed").innerHTML = data.breed;
-                        document.getElementById("age").innerHTML = data.age;
-                        document.getElementById("act1").innerHTML = data.act1;
-                        document.getElementById("act2").innerHTML = data.act2;
-                        document.getElementById("act3").innerHTML = data.act3;
-                        document.getElementById("photo").setAttribute("src", "uploads/"+data.image);*/
-                        
+                        if(data.requestedPlaydates != null){
+                            //id, dname, image, date, message
+                            for(let i=0; i<data.requestedPlaydates.length; i++){
+                                addBox("RDGrid", data.requestedPlaydates[i].id, data.requestedPlaydates[i].dname, data.requestedPlaydates[i].image, data.requestedPlaydates[i].date, data.requestedPlaydates[i].message); 
+                            }
+                        } else {
+                            document.getElementById("RDGrid").style.display = "none";
+                            document.getElementById("noreqs").innerHTML = "You do not have any playdate requests.";
+                        }
+                        if(data.upcomingPlaydates != null){
+                            //id, dname, image, date, message
+                            for(let i=0; i<data.requestedPlaydates.length; i++){
+                                addBox("DatesGrid", data.requestedPlaydates[i].id, data.requestedPlaydates[i].dname, data.requestedPlaydates[i].image, data.requestedPlaydates[i].date, data.requestedPlaydates[i].message); 
+                            }
+                        } else {
+                            document.getElementById("DatesGrid").style.display = "none";
+                            document.getElementById("nodates").innerHTML = "You do not have any upcoming playdates.";
+                        }
                     } else {
                         alert("Something went wrong. Playdates could not be loaded.");
                     }
                 }
+            }
+            
+            function addBox(grid, id, name, image, date, message) {
+                var div = document.createElement('div');
+                div.setAttribute('class','grid-item');  
+                div.setAttribute('style','text-align: left');  
+                document.getElementById(grid).appendChild(div);
+
+                var span = document.createElement('span');
+                var txt = document.createTextNode(" Date: " + date);
+                span.appendChild(txt);
+                div.appendChild(span);
+                
+                var br = document.createElement('br');
+                div.appendChild(br);
+                
+                span = document.createElement('span');
+                txt = document.createTextNode(" With: " + name);
+                span.appendChild(txt);
+                div.appendChild(span);
+                
+                br = document.createElement('br');
+                div.appendChild(br);
+                
+                var img = document.createElement('img');
+                img.setAttribute('src',"uploads/"+image);
+                img.setAttribute('style',"width: 100px; height: 100px");
+                div.appendChild(img);
+                
+                br = document.createElement('br');
+                div.appendChild(br);
+                
+                span = document.createElement('span');
+                txt = document.createTextNode(" Message: " + message);
+                span.appendChild(txt);
+                div.appendChild(span);
+                
+                if (grid == "RDGrid") {
+                    br = document.createElement('br');
+                    div.appendChild(br);
+                    
+                    var b1 = document.createElement('button');
+                    txt = document.createTextNode(" Accept ");
+                    b1.appendChild(txt);
+                    b1.setAttribute('class','form');
+                    b1.setAttribute('style',"font-size: .75em; margin-top: 80px");
+                    b1.setAttribute("onclick", "answer("+id+","+date+",true)"); 
+                    div.appendChild(b1);
+                    
+                    br = document.createElement('br');
+                    div.appendChild(br);
+                    
+                    var b2 = document.createElement('button');
+                    txt = document.createTextNode(" Can't Go ");
+                    b2.appendChild(txt);
+                    b1.setAttribute('style',"font-size: .75em; margin-top: 80px");
+                    b1.setAttribute("onclick", "answer("+id+","+date+",false)"); 
+                    div.appendChild(b2);
+                }  
+            }
+            var playdate;
+            function answer(id, date, answer) {
+                
             }
           
             
@@ -44,6 +116,8 @@
             <br/>
             <a class="side" href="friends.html">Friends</a>
             <br/>
+            <a class="side" href="requests.html">Barks</a>
+            <br/>
             <a class="side" href="playdates.html">Playdates</a>
             <br/>
             <br/>
@@ -52,43 +126,24 @@
         <br/>
         
         <div id="playdates" class="theme" style="text-align: left" > 
-            <div style="margin-left: 18%; font-weight: 700; font-size: 1.5em">
-                <span >Upcoming Playdates: </span>
+            <div style="margin-left: 18%">
+                <span style="font-weight: 700; font-size: 1.5em">Upcoming Playdates: </span>
                 <span id="nodates"> </span>
             </div>
-           
-           
+                  
             <div id="DatesGrid" class="grid-container"> 
-              <div id="d1" class="grid-item" style="text-align: left">
-                
-                <span > Date: </span>
-                <br>
-                <span > With: </span>
-                <br>
-                <span> Message:  </span>
-                   
-               </div>
+
             </div>
         </div>
         
         <div id="requesteddates" class="theme" style="text-align: left" > 
-            <div style="margin-left: 18%; font-weight: 700; font-size: 1.5em">
-                <span >Requested Playdates: </span>
+            <div style="margin-left: 18%">
+                <span style="font-weight: 700; font-size: 1.5em">Requested Playdates: </span>
                 <span id="noreqs"> </span>
             </div>
            
-           
             <div id="RDGrid" class="grid-container"> 
-              <div id="rd1" class="grid-item" style="text-align: left">
                 
-                <span > Date: </span>
-                <br>
-                <span > With: </span>
-                <br>
-                <span> Message:  </span>
-                  <button class="form" style="font-size: .75em; margin-top: 80px"> Accept</button>
-                   
-               </div>
             </div>
         </div>
         
