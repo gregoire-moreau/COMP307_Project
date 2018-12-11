@@ -156,7 +156,7 @@
                 b1.appendChild(txt);
                 b1.setAttribute('class','form');
                 b1.setAttribute('style',"font-size: .6em");
-                b1.setAttribute("onclick", "return helper("+i+","+grid+")"); 
+                b1.setAttribute("onclick", "helper("+i+","+grid+")"); 
                 div.appendChild(b1);
                 var b2 = document.createElement('button');
                 if (grid == "RequestsGrid") {
@@ -191,7 +191,7 @@
             }
             
             function helper(i, grid){
-                if(grid == "RequestsGrid"){
+                if(grid.id == "RequestsGrid"){
                     var name = data.pendingRequests[i].dname; 
                     var age = data.pendingRequests[i].age;
                     var breed = data.pendingRequests[i].breed;
@@ -254,9 +254,9 @@
                     if (barkBack.responseText != null) {
                         var data = JSON.parse(barkBack.responseText);
                         if (data.status) {
-                            alert("Succesfully barked back!");
+                            alert("Succesful action!");
                         } else {
-                            alert("Bark back unsuccesful.");
+                            alert("Action unsuccesful.");
                         }
                     } else {
                          alert("Something went wrong. Try again later.");
