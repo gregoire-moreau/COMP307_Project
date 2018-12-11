@@ -142,3 +142,21 @@ a.side:hover{color: #2ce8db}
     padding: 10px;
 }
 
+
+a.mainbutton{
+    
+    box-sizing: border-box;
+    box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
+    background-color: white; 
+    border: 1px solid #2ce8db;  
+    padding: 10px 20px; 
+    border-radius: 8px;
+    outline: none;
+   
+    font-family: "Courier New", monospace; 
+    font-size: 2em;
+    font-weight: 300; 
+}
+a.mainbutton:link{color: black; text-decoration: none}
+a.mainbutton:visited {color: inherit}
+a.mainbutton:hover{color: #2ce8db}
