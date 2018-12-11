@@ -89,6 +89,23 @@ $app->post('/acceptrequest', function($request, $response){
     $stmt->execute();
 });
 
+$app->post('/accept_playdate', function($request, $response){
+    $dogData =  json_decode(file_get_contents('php://input'), true);
+    if ($dogData["answer"]){
+        $query = "UPDATE playdates SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
+    }else{
+        $query = "DELETE FROM playdates WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
+    }
+    $stmt =  $GLOBALS['mysqli']->prepare($query);
+    $stmt->bind_param('sds',$_COOKIE['SessionID'], $dogData["dogID"], $dogData["date"] );
+    $stmt->execute();
+});
+
+$app->post('/playdate_request', function($request, $response){
+    $dogData =  json_decode(file_get_contents('php://input'), true);
+    require_once('addplaydate.php');
+});
+
 $app->post('/main', function($request, $response){
     if(checkSessionID()){
         $fnameQuery = "SELECT firstName as fname FROM users WHERE username = (SELECT uname FROM sessions WHERE SessionID = ?);";
