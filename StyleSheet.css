@@ -38,7 +38,7 @@ body {
 }
 
 /* inputs formatted in theme*/
-input[type=text],[type=number],[type=password], select, textarea{
+input[type=text],[type=number],[type=password], select, textarea, .rect{
     box-sizing: border-box;
     box-shadow:  1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760;
     border: 1px solid #2ce8db;  
@@ -81,7 +81,7 @@ a.side:hover{color: #2ce8db}
     position: fixed; 
     width: 12%;
     background-color: white;
-    border-radius: 0px 0px 8px 0px; 
+    border-radius: 8px 8px 8px 8px; 
     box-shadow: 1px 1px 1px black, 0 0 25px #218287, 0 0 5px #144760; 
     padding-left: 3%; 
     padding-right: 3%; 
