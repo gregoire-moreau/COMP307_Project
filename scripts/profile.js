@@ -1,6 +1,6 @@
 function showProfile(dname, breed, age, act1, act2, act3, image) {
     var title = dname + "'s Profile";
-    var win = window.open("showprofile.html", title, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" + (screen.width-200) + ",height="+ screen.height);
+    var win = window.open("showprofile.html", title, "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" + screen.width + ",height="+ screen.height);
     
     win.onload = function() {
         win.document.getElementById("dname").innerHTML = dname;
