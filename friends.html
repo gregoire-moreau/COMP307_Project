@@ -17,7 +17,7 @@
                         if(data.friends != null){
                             
                             for(let i=0; i<data.friends.length; i++){
-                                addBox(data.friends[i].id, data.friends[i].dname, data.friends[i].image); 
+                                addBox(data.friends[i].id, data.friends[i].dname, data.friends[i].image, i); 
                             }
                             
                             
@@ -37,14 +37,14 @@
                 }
             }
             // dog id, dog name, dog image
-            function addBox(id, name, image) {
+            function addBox(id, name, image, i) {
                 var div = document.createElement('div');
                 //div.setAttribute('id', id);
                 div.setAttribute('class','grid-item');         
                 document.getElementById("FriendGrid").appendChild(div);
                 var img = document.createElement('img');
                 img.setAttribute('src',"uploads/"+image);
-                img.setAttribute('style',"padding-left: 10%; width: 100px; height: 100px");
+                img.setAttribute('style',"width: 100px; height: 100px");
                 div.appendChild(img);
                 var br = document.createElement('br');
                 div.appendChild(br);
@@ -59,6 +59,7 @@
                 b1.appendChild(txt);
                 b1.setAttribute('class','form');
                 b1.setAttribute('style',"font-size: .6em");
+                b1.setAttribute("onclick", "return helper("+i+")"); 
                 div.appendChild(b1);
                 var b2 = document.createElement('button');
                 txt = document.createTextNode(" Playdate ");
@@ -67,6 +68,17 @@
                 b2.setAttribute('style',"font-size: .6em");
                 div.appendChild(b2);
             }    
+            
+            function helper(i){
+                var name = data.friends[i].dname; 
+                var age = data.friends[i].age;
+                var breed = data.friends[i].breed;
+                var a1 = data.friends[i].act1;
+                var a2 = data.friends[i].act2; 
+                var a3 = data.friends[i].act3; 
+                var image = data.friends[i].image; 
+                showProfile(name, breed, age, a1, a2, a3, image); 
+            }
             
         </script>
         
