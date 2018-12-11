@@ -236,6 +236,7 @@
                         var data = JSON.parse(bark.responseText);
                         if (data.status) {
                             alert("Succesfully barked!");
+                            window.open("requests.html","_self");
                         } else {
                             alert("Bark unsuccesful.");
                         }
@@ -260,6 +261,7 @@
                         var data = JSON.parse(barkBack.responseText);
                         if (data.status) {
                             alert("Succesful action!");
+                            window.open("requests.html","_self");
                         } else {
                             alert("Action unsuccesful.");
                         }

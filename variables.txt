@@ -31,7 +31,7 @@ Password (bis)
 {"dogID":dogid, "answer": true or false}
  
 /playdate_request
-{"dogID":dogid, "date":the date}
+{"dogID":dogid, "date":the date, "message":the message}
 
 /accept_playdate
 {"dogID":dogid, "date":the date, "answer":true or false}

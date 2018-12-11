@@ -25,8 +25,8 @@
                         }
                         if(data.upcomingPlaydates != null){
                             //id, dname, image, date, message
-                            for(let i=0; i<data.requestedPlaydates.length; i++){
-                                addBox("DatesGrid", data.requestedPlaydates[i].id, data.requestedPlaydates[i].dname, data.requestedPlaydates[i].image, data.requestedPlaydates[i].date, data.requestedPlaydates[i].message); 
+                            for(let i=0; i<data.upcomingPlaydates.length; i++){
+                                addBox("DatesGrid", data.upcomingPlaydates[i].id, data.upcomingPlaydates[i].dname, data.upcomingPlaydates[i].image, data.upcomingPlaydates[i].date, data.upcomingPlaydates[i].message); 
                             }
                         } else {
                             document.getElementById("DatesGrid").style.display = "none";
@@ -91,17 +91,37 @@
                     var b2 = document.createElement('button');
                     txt = document.createTextNode(" Can't Go ");
                     b2.appendChild(txt);
-                    b1.setAttribute('style',"font-size: .75em; margin-top: 80px");
-                    b1.setAttribute("onclick", "answer("+id+","+date+",false)"); 
+                    b2.setAttribute('class','form');
+                    b2.setAttribute('style',"font-size: .75em; margin-top: 80px");
+                    b2.setAttribute("onclick", "answer("+id+","+date+",false)"); 
                     div.appendChild(b2);
                 }  
             }
             var playdate;
-            function answer(id, date, answer) {
-                
+            function answer(dogID, date, answer) {
+                var a1 = ["dogID", "date", "answer"];
+                var a2 = [dogID, date, answer];
+                var payload = formatAsJSON(a1, a2);
+                playdate = new XMLHttpRequest();
+                playdate.open("POST", "accept_playdate", true);
+                playdate.addEventListener("readystatechange", answerReceived, false);
+                playdate.send(payload);
             }
-          
-            
+            function answerReceived() {
+                if (playdate.readyState == 4 && playdate.status == 200) {
+                    if (playdate.responseText != null) {
+                        var data = JSON.parse(playdate.responseText);
+                        if (data.status) {
+                            alert("Succesful action!");
+                            window.open("playdates.html","_self");
+                        } else {
+                            alert("Action unsuccesful.");
+                        }
+                    } else {
+                         alert("Something went wrong. Try again later.");
+                    }
+                }
+            }
         </script>
 	</head> 
 	
