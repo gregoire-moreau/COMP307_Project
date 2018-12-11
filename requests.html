@@ -76,8 +76,7 @@
                             document.getElementById("suggestedfriends").appendChild(txt);
                         }
                         
-                        pendingRequests = data.pendingRequests;
-                        otherDogs = data.otherDogs;
+                        
                     } else {
                         alert("Something went wrong. Requests could not be loaded.");
                     }
@@ -191,9 +190,8 @@
                 document.getElementById(grid).replaceChild(div, document.getElementById(box));
             }
             
-            function helper(i, type){
-                if(type == "RequestsGrid"){
-                
+            function helper(i, grid){
+                if(grid == "RequestsGrid"){
                     var name = data.pendingRequests[i].dname; 
                     var age = data.pendingRequests[i].age;
                     var breed = data.pendingRequests[i].breed;
@@ -232,7 +230,7 @@
                     if (bark.responseText != null) {
                         var data = JSON.parse(bark.responseText);
                         if (data.status) {
-                            alert("Succesfully barked!")
+                            alert("Succesfully barked!");
                         } else {
                             alert("Bark unsuccesful.");
                         }
@@ -256,7 +254,7 @@
                     if (barkBack.responseText != null) {
                         var data = JSON.parse(barkBack.responseText);
                         if (data.status) {
-                            alert("Succesfully barked back!")
+                            alert("Succesfully barked back!");
                         } else {
                             alert("Bark back unsuccesful.");
                         }
