@@ -24,5 +24,15 @@ LOGIN
 Username (bis)
 Password (bis)
 
+/friendrequest
+{"dogID":dogid}
 
+/acceptrequest 
+{"dogID":dogid, "answer": true or false}
+ 
+/playdate_request
+{"dogID":dogid, "date":the date}
+
+/accept_playdate
+{"dogID":dogid, "date":the date, "answer":true or false}
 

@@ -161,25 +161,24 @@
                 var b2 = document.createElement('button');
                 if (grid == "RequestsGrid") {
                     txt = document.createTextNode(" Bark Back ");
+                    b2.setAttribute('onclick','barkBack('+ id +', true)');
                 } else {
                     txt = document.createTextNode(" Bark ");
+                    b2.setAttribute('onclick','bark('+ id +')');
                 }
                 b2.appendChild(txt);
                 b2.setAttribute('class','form');
                 b2.setAttribute('style',"font-size: .6em");
                 div.appendChild(b2);
-                var b3 = document.createElement('button');
-                txt = document.createTextNode(" Ignore ");
-                b3.appendChild(txt);
-                b3.setAttribute('class','form');
-                b3.setAttribute('style',"font-size: .6em");
-                div.appendChild(b3);
-                var hidden = document.createElement('span');
-                var txt = document.createTextNode(id);
-                hidden.appendChild(txt);
-                hidden.setAttribute('style','display:none');
-                hidden.setAttribute('id',box+'id');
-                div.appendChild(hidden);
+                if (grid == "RequestsGrid") {
+                    var b3 = document.createElement('button');
+                    txt = document.createTextNode(" Ignore ");
+                    b3.setAttribute('onclick','barkBack('+ id +', false)');
+                    b3.appendChild(txt);
+                    b3.setAttribute('class','form');
+                    b3.setAttribute('style',"font-size: .6em");
+                    div.appendChild(b3);
+                }
                 
                 return div;
             }
@@ -188,6 +187,55 @@
             function replaceBox(grid, box, id, name, image) {
                 var div = createBox(grid, box, id, name, image);
                 document.getElementById(grid).replaceChild(div, document.getElementById(box));
+            }
+            
+            var bark;
+            function bark(dogID) {
+                var a1 = ["dogID"];
+                var a2 = [dogID];
+                var payload = formatAsJSON(a1, a2);
+                bark = new XMLHttpRequest();
+                bark.open("POST", "friendrequest", true);
+                bark.addEventListener("readystatechange", barkReceived, false);
+                bark.send(payload);
+            }
+            function barkReceived() {
+                if (bark.readyState == 4 && bark.status == 200) {
+                    if (bark.responseText != null) {
+                        var data = JSON.parse(bark.responseText);
+                        if (data.status) {
+                            alert("Succesfully barked!")
+                        } else {
+                            alert("Bark unsuccesful.");
+                        }
+                    } else {
+                         alert("Something went wrong. Try again later.");
+                    }
+                }
+            }
+            var barkBack;
+            function barkBack(dogID, answer) {
+                var a1 = ["dogID", "answer"];
+                var a2 = [dogID, answer];
+                var payload = formatAsJSON(a1, a2);
+                barkBack = new XMLHttpRequest();
+                barkBack.open("POST", "acceptrequest", true);
+                barkBack.addEventListener("readystatechange", barkBackReceived, false);
+                barkBack.send(payload);
+            }
+            function barkBackReceived() {
+                if (barkBack.readyState == 4 && barkBack.status == 200) {
+                    if (barkBack.responseText != null) {
+                        var data = JSON.parse(barkBack.responseText);
+                        if (data.status) {
+                            alert("Succesfully barked back!")
+                        } else {
+                            alert("Bark back unsuccesful.");
+                        }
+                    } else {
+                         alert("Something went wrong. Try again later.");
+                    }
+                }
             }
             
         </script>
