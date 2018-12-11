@@ -72,9 +72,21 @@ $app->post('/not_friends', function($request, $response) {
     }
 });
 
-$app->post('/add_friend', function($request, $response){
+$app->post('/friendrequest', function($request, $response){
     $dogData =  json_decode(file_get_contents('php://input'), true);
     require_once('addfriend.php');
+});
+
+$app->post('/acceptrequest', function($request, $response){
+    $dogData =  json_decode(file_get_contents('php://input'), true);
+    if ($dogData["answer"]){
+        $query = "UPDATE friends SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
+    }else{
+        $query = "DELETE FROM friends WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
+    }
+    $stmt =  $GLOBALS['mysqli']->prepare($query);
+    $stmt->bind_param('sd',$_COOKIE['SessionID'], $dogData["dogID"] );
+    $stmt->execute();
 });
 
 $app->post('/main', function($request, $response){
@@ -107,8 +119,10 @@ $app->get('/logout', function($request, $response){
     return $response;
 });
 
+
+
 $app->get('/test', function($request, $response){
-    echo json_encode(NULL);
+    require_once('pending_requests.php');
 });
 
 function checkField($fieldVal){
