@@ -79,7 +79,7 @@ $app->post('/friendrequest', function($request, $response){
 
 $app->post('/acceptrequest', function($request, $response){
     $dogData =  json_decode(file_get_contents('php://input'), true);
-    if ($dogData["answer"]){
+    if ($dogData["answer"] == "true"){
         $query = "UPDATE friends SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
     }else{
         $query = "DELETE FROM friends WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
@@ -91,7 +91,7 @@ $app->post('/acceptrequest', function($request, $response){
 
 $app->post('/accept_playdate', function($request, $response){
     $dogData =  json_decode(file_get_contents('php://input'), true);
-    if ($dogData["answer"]){
+    if ($dogData["answer"] == "true"){
         $query = "UPDATE playdates SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
     }else{
         $query = "DELETE FROM playdates WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
@@ -108,21 +108,7 @@ $app->post('/playdate_request', function($request, $response){
 
 $app->post('/main', function($request, $response){
     if(checkSessionID()){
-        $fnameQuery = "SELECT firstName as fname FROM users WHERE username = (SELECT uname FROM sessions WHERE SessionID = ?);";
-        $stmt =  $GLOBALS['mysqli']->prepare($fnameQuery);
-        $stmt->bind_param('s', $_COOKIE['SessionID']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $data = NULL;
-        while($row =  $result->fetch_assoc()){
-            $data[] = $row;
-        }
-        if($data == NULL){
-            echo '{"status":false, "fname":"user"}';
-        }
-        else{
-            echo '{"status":true, "fname":"'.$data[0]["fname"].'"}';
-        }
+        require_once('main.php');
     }
 });
 
@@ -139,7 +125,7 @@ $app->get('/logout', function($request, $response){
 
 
 $app->get('/test', function($request, $response){
-    require_once('pending_requests.php');
+    require_once('main.php');
 });
 
 function checkField($fieldVal){
