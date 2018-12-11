@@ -1,7 +1,7 @@
 <?php
 
 $fnameQuery = "SELECT firstName as fname, username FROM users WHERE username = (SELECT uname FROM sessions WHERE SessionID = ?);";
-$dogIDQuery = "SELECT id FROM dogs WHERE owner = ?";
+$dogIDQuery = "SELECT id, name FROM dogs WHERE owner = ?";
 $stmt =  $GLOBALS['mysqli']->prepare($fnameQuery);
 $stmt->bind_param('s', $_COOKIE['SessionID']);
         $stmt->execute();
@@ -30,6 +30,7 @@ $stmt->bind_param('s', $_COOKIE['SessionID']);
                 return;
             }
             $id = $data[0]["id"];
+            $dname = $data[0]["name"];
             $numFriendRequestsQuery = "SELECT COUNT(id) FROM friends WHERE dog2 = $id AND accepted = false;";
             $numPlayDateRequestsQuery = "SELECT COUNT(date) FROM playdates WHERE dog2 = $id AND accepted = false";
             $upcomingPlayDatesQuery = "SELECT COUNT(date) FROM playdates WHERE (dog1=$id OR dog2=$id) AND accepted = true";
@@ -52,5 +53,5 @@ $stmt->bind_param('s', $_COOKIE['SessionID']);
             }
             $upcomingPlayDates = $data[0]["COUNT(date)"];
 
-            echo '{"status":true, "fname":"'.$fname.'", "friendsReqNum":'.$numFriendRequests.', "playReqNum":'.$numPlayDateRequests.', "upcomingNum":'.$upcomingPlayDates.'}';
+            echo '{"status":true, "fname":"'.$fname.'","dname":"'.$dname.'",  "friendsReqNum":'.$numFriendRequests.', "playReqNum":'.$numPlayDateRequests.', "upcomingNum":'.$upcomingPlayDates.'}';
         }
