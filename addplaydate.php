@@ -3,7 +3,7 @@ $checkQuery =  "SELECT * FROM playdates WHERE dog1 = (SELECT id FROM dogs WHERE 
 $pDateQuery = "INSERT INTO playdates(dog1, dog2, accepted, date, message) VALUES ((SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID=?)),?, false, ?, ?);";
 try{
     $stmt  = $GLOBALS['mysqli']->prepare($checkQuery);
-    $stmt->bind_param('sd', $_COOKIE["SessionID"],$dogData["dogID"], $dogData["date"]);
+    $stmt->bind_param('sdss', $_COOKIE["SessionID"],$dogData["dogID"], $dogData["date"], $dogData["message"]);
     $stmt->execute(); 
     $result = $stmt->get_result();
     $data = NULL;

@@ -30,7 +30,7 @@ try{
     }
     $upcomingPlaydates = json_encode($data);
 
-    echo '{"fname":"'.$fname.'", "dname":"'.$dogName.'", "requestedPlaydates":"'.$requestedPlaydates.'", "upcomingPlaydates":"'.$upcomingPlaydates.'"}';
+    echo '{"fname":"'.$fname.'", "dname":"'.$dogName.'", "requestedPlaydates":'.$requestedPlaydates.', "upcomingPlaydates":'.$upcomingPlaydates.'}';
 }catch (Exception $e) {
     echo '{"status":false}';
 }
