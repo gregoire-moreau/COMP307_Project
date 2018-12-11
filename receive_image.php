@@ -33,8 +33,23 @@ if(isset($_FILES['files'])){
 
         if (empty($errors)) {
             move_uploaded_file($file_tmp, $file);
-            $sqlQuery = "UPDATE dogs SET image = '$file_name' WHERE owner = (SELECT uname FROM sessions WHERE SessionID = '".$_COOKIE['SessionID']."');";
-            $GLOBALS['mysqli']->query($sqlQuery);
+            $checkQuery = "SELECT image FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?);";
+            $stmt =  $GLOBALS['mysqli']->prepare($checkQuery);
+            $stmt->bind_param('s', $_COOKIE['SessionID']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data = NULL;
+            while($row =  $result->fetch_assoc()){
+                $data[] = $row;
+            }
+            $oldImage = $data[0]["image"];
+            if($oldImage != "dog.png"){
+                unlink($path.$oldImage);
+            }
+            $sqlQuery = "UPDATE dogs SET image = '$file_name' WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?);";
+            $stmt =  $GLOBALS['mysqli']->prepare($sqlQuery);
+            $stmt->bind_param('s', $_COOKIE['SessionID']);
+            $stmt->execute();
             echo '{"status":true, "image":"'.$file_name.'"}';
         }
     }
