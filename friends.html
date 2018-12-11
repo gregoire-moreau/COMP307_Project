@@ -11,7 +11,7 @@
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
                         // server response string goes into data
-                        var data = JSON.parse(request.responseText);
+                        data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("dname").innerHTML = data.dname;
                         if(data.friends != null){
