@@ -12,8 +12,25 @@
                     if (request.responseText != null) {
                         // server response string goes into data
                         var data = JSON.parse(request.responseText);
-                        //document.getElementById("fname").innerHTML = data.fname;
+                        document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("dname").innerHTML = data.dname;
+                        if(data.friends != null){
+                            
+                            for(let i=0; i<data.friends.length; i++){
+                                addBox(data.friends[i].id, data.friends[i].dname, data.friends[i].image); 
+                            }
+                            
+                            
+                        } else {
+                            document.getElementById("FriendGrid").style.display = "none";
+                            //var txt = document.createTextNode("You do not have any friends yet. Get barking!");
+                            //document.getElementById("myfriends").appendChild(txt);
+                            document.getElementById("nofriends").innerHTML = "No friends yet. Get barking!";
+                        }
+                        
+                        
+                        
+                        
                     } else {
                         alert("Something went wrong. Friends could not be loaded.");
                     }
@@ -57,7 +74,7 @@
 
    <body onload="load('friends')">
 		<div class="sidebar">
-            Welcome, <span id="uname">User</span>!
+            Welcome, <span id="fname">User</span>!
             <br/>
             <br/>
             <a class="side" href="main.html">Main Page</a>
@@ -73,17 +90,19 @@
             <br/>
             <a class="side" href="logout">Logout</a>
             
-            <br><button onclick="addBox('1','Zip','dog.png')">Test</button>
+            <!--<br><button onclick="addBox('1','Zip','dog.png')">Test</button>-->
         </div>
         <br/>
        
         <div id="myfriends" class="theme" style="text-align: left" > 
            <div style="margin-left: 18%; font-weight: 700; font-size: 1.5em">
                 <span id="dname">Dog</span>'s Friends: 
+                <span id="nofriends"> </span>
            </div>
            
+           
            <div id="FriendGrid" class="grid-container"> 
-               <div id="f1" class="grid-item">
+               <!--<div id="f1" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px >" > 
                     <br>
                     <span >Name</span>
@@ -107,10 +126,7 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Playdate </button>
                </div>
-               <div style="margin-left: 55%; margin-top: 25%">
-                    <button class="form" style="font-size: .75em; width: 150px; height: 50px;  "> View All Friends </button>
-              </div>
-               
+               -->
             </div>
        </div>
      
