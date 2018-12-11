@@ -53,6 +53,12 @@ $app->post('/profile', function($request, $response) {
     }
 });
 
+$app->post('/playdates', function($request, $response) {
+    if (checkSessionID()){
+        require_once('playdates.php');
+    }
+});
+
 $app->post('/receive_image', function($request, $response) {
     file_put_contents("test.log", "heddre");
     if (checkSessionID()){
@@ -79,26 +85,12 @@ $app->post('/friendrequest', function($request, $response){
 
 $app->post('/acceptrequest', function($request, $response){
     $dogData =  json_decode(file_get_contents('php://input'), true);
-    if ($dogData["answer"] == "true"){
-        $query = "UPDATE friends SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
-    }else{
-        $query = "DELETE FROM friends WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=?;";
-    }
-    $stmt =  $GLOBALS['mysqli']->prepare($query);
-    $stmt->bind_param('sd',$_COOKIE['SessionID'], $dogData["dogID"] );
-    $stmt->execute();
+    require_once('accept_friendship.php');
 });
 
 $app->post('/accept_playdate', function($request, $response){
     $dogData =  json_decode(file_get_contents('php://input'), true);
-    if ($dogData["answer"] == "true"){
-        $query = "UPDATE playdates SET accepted = true WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
-    }else{
-        $query = "DELETE FROM playdates WHERE dog2 = (SELECT id FROM dogs WHERE owner = (SELECT uname FROM sessions WHERE SessionID = ?)) AND dog1=? AND date=?;";
-    }
-    $stmt =  $GLOBALS['mysqli']->prepare($query);
-    $stmt->bind_param('sds',$_COOKIE['SessionID'], $dogData["dogID"], $dogData["date"] );
-    $stmt->execute();
+    require_once('accept_playdate.php');
 });
 
 $app->post('/playdate_request', function($request, $response){
@@ -125,7 +117,7 @@ $app->get('/logout', function($request, $response){
 
 
 $app->get('/test', function($request, $response){
-    require_once('main.php');
+    require_once('playdates.php');
 });
 
 function checkField($fieldVal){
