@@ -122,28 +122,43 @@
                     }
                 }
             }
+            function logout(){
+                window.open("logout", "_self");
+            }
         </script>
 	</head> 
 	
 	<body onload="load('playdates')">
 		<div class="sidebar">
-            Welcome, <span id="fname">User</span>!
+            <div style="font-weight: 600; text-align: center">
+                Welcome, <span id="fname">User</span>!
+            </div>
             <br/>
+            <div style="padding-bottom: 10%">
+                <a class="side" href="main.html">Home</a>
+            </div>
+            
+            <div style="padding-bottom: 10%">
+                <a class="side" href="profile.html">Profile</a>
+            </div>
+            
+            <div style="padding-bottom: 10%">
+                <a class="side" href="friends.html">Friends</a>
+           
+            </div>
+            <div style="padding-bottom: 10%">
+                <a class="side" href="requests.html">Barks</a>
+            </div>
+            
+            <div style="padding-bottom: 10%">
+                <a class="side" href="playdates.html">Playdates</a>
+            </div>
             <br/>
-            <a class="side" href="main.html">Main Page</a>
-            <br/>
-            <a class="side" href="profile.html">Profile</a>
-            <br/>
-            <a class="side" href="friends.html">Friends</a>
-            <br/>
-            <a class="side" href="requests.html">Barks</a>
-            <br/>
-            <a class="side" href="playdates.html">Playdates</a>
-            <br/>
-            <br/>
-            <a class="side" href="logout">Logout</a>
+            <div style="padding-bottom: 5%; text-align: left">
+                <button class="form" style="font-size: .75em" onclick="logout()">Logout</button>
+            </div>
+
         </div>
-        <br/>
         
         <div id="playdates" class="theme" style="text-align: left" > 
             <div style="margin-left: 18%">
