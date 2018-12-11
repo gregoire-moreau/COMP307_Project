@@ -67,6 +67,7 @@
                 b2.appendChild(txt);
                 b2.setAttribute('class','form');
                 b2.setAttribute('style',"font-size: .6em");
+                b2.setAttribute("onclick", "return schedule("+id+")"); 
                 div.appendChild(b2);
             }    
             
@@ -80,8 +81,7 @@
                 var image = data.friends[i].image; 
                 showProfile(name, breed, age, a1, a2, a3, image); 
             }
-            
-            // placeholder="Message to your friend..." 
+             
             function logout(){
                 window.open("logout", "_self");
             }
