@@ -46,6 +46,7 @@
                         }
                         
                         if (data.otherDogs != null) {
+                            sortSuggestions();
                             indexSug = 0;
                             var sug = data.otherDogs[indexSug];
                             replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image, indexSug);
@@ -78,6 +79,55 @@
                     } else {
                         alert("Something went wrong. Requests could not be loaded.");
                     }
+                }
+            }
+            
+            function sortSuggestions() {
+                var suggestions = new Array();
+                var max;
+                var maxIdx;
+                var l = data.otherDogs.length;
+                
+                for (let i = 0; i < l; i++) {
+                    max = data.otherDogs[0];
+                    maxIdx = 0;
+                    for (let j = 1; j < data.otherDogs.length; j++) {
+                        if (compareDogs(max, data.otherDogs[j]) == 1) {
+                            continue;
+                        } else {
+                            max = data.otherDogs[j];
+                            maxIdx = j;
+                        }
+                    }
+                    suggestions.push(max);
+                    data.otherDogs.splice(maxIdx, 1);
+                    if (data.otherDogs.length < 2) {
+                        suggestions.push(data.otherDogs[0]);
+                        break;
+                    }
+                }
+                
+                data.otherDogs = suggestions;
+            }
+            
+            function compareDogs(dog1, dog2) {
+                if (scoreDog(dog1) >= scoreDog(dog2)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            
+            function scoreDog(dog) {
+                var score = 0;
+                if (dog.act1 == data.act1 || dog.act1 == data.act2 || dog.act1 == data.act3) {
+                    score++;
+                }
+                if (dog.act2 == data.act1 || dog.act2 == data.act2 || dog.act2 == data.act3) {
+                    score++;
+                }
+                if (dog.act3 == data.act1 || dog.act3 == data.act2 || dog.act3 == data.act3) {
+                    score++;
                 }
             }
             
