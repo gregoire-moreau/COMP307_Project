@@ -40,8 +40,8 @@
             
             function addBox(grid, id, name, image, date, message) {
                 var div = document.createElement('div');
-                div.setAttribute('class','grid-item');  
-                div.setAttribute('style','text-align: left');  
+                div.setAttribute('class','grid-item-big');  
+                div.setAttribute('style','text-align: left; word-wrap: break-word; position: relative');  
                 document.getElementById(grid).appendChild(div);
 
                 var span = document.createElement('span');
@@ -67,7 +67,7 @@
                 
                 br = document.createElement('br');
                 div.appendChild(br);
-                
+                                
                 span = document.createElement('span');
                 txt = document.createTextNode(" Message: " + message);
                 span.appendChild(txt);
@@ -81,22 +81,22 @@
                     txt = document.createTextNode(" Accept ");
                     b1.appendChild(txt);
                     b1.setAttribute('class','form');
-                    b1.setAttribute('style',"font-size: .75em; margin-top: 80px");
-                    b1.setAttribute("onclick", "answer("+id+","+date+",true)"); 
+                    b1.setAttribute('style',"font-size: .75em; position: absolute; bottom: 15px; margin-left: 35px");
+                    b1.setAttribute("onclick", "answer("+id+","+date+",true)");
                     div.appendChild(b1);
-                    
-                    br = document.createElement('br');
-                    div.appendChild(br);
+
                     
                     var b2 = document.createElement('button');
                     txt = document.createTextNode(" Can't Go ");
                     b2.appendChild(txt);
                     b2.setAttribute('class','form');
-                    b2.setAttribute('style',"font-size: .75em; margin-top: 80px");
+                    b2.setAttribute('style',"font-size: .75em; position: absolute; bottom: 15px; margin-left: 115px");
                     b2.setAttribute("onclick", "answer("+id+","+date+",false)"); 
                     div.appendChild(b2);
-                }  
+                } 
+                
             }
+            
             var playdate;
             function answer(dogID, date, answer) {
                 var a1 = ["dogID", "date", "answer"];
@@ -166,7 +166,7 @@
                 <span id="nodates"> </span>
             </div>
                   
-            <div id="DatesGrid" class="grid-container"> 
+            <div id="DatesGrid" class="grid-container-big"> 
 
             </div>
         </div>
@@ -177,7 +177,7 @@
                 <span id="noreqs"> </span>
             </div>
            
-            <div id="RDGrid" class="grid-container"> 
+            <div id="RDGrid" class="grid-container-big"> 
                 
             </div>
         </div>
