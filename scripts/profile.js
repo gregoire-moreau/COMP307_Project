@@ -19,8 +19,19 @@ function schedule(id) {
     
     win.onload = function() {
         win.document.getElementById("id").innerHTML = id;
-        win.document.getElementById("date").setAttribute('valueAsDate', new Date());
-        win.document.getElementById("date").setAttribute('min', new Date());
-        win.document.getElementById("date").setAttribute('max', "2019-12-31");
+        var today = new Date();
+        win.document.getElementById("date").valueAsDate = today;
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        if(day < 10) {
+            day = '0' + day;
+        } 
+        if(month < 10) {
+            month = '0' + month;
+        } 
+        today = year + '-' + month + '-' +day;
+        win.document.getElementById("date").min = today;
+        win.document.getElementById("date").max= "2019-12-31";
      }      
 }
