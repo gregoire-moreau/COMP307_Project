@@ -46,7 +46,9 @@
                         }
                         
                         if (data.otherDogs != null) {
-                            sortSuggestions();
+                            if (data.otherDogs.length > 1) {
+                                sortSuggestions();
+                            }
                             indexSug = 0;
                             var sug = data.otherDogs[indexSug];
                             replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image, indexSug);
