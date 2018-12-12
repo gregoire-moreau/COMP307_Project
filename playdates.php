@@ -15,14 +15,14 @@ try{
     $fname = $data[0]["firstName"];
     $dogID = $data[0]["id"];
     $dogName = $data[0]["name"];
-    $requestedPlaydateQuery = "SELECT dogs.id as id, name as dname, image, date, message FROM `playdates`, dogs WHERE dog2=$dogID AND dogs.id = playdates.dog1 AND accepted = false; ";
+    $requestedPlaydateQuery = "SELECT dogs.id as id, name as dname, image, date, message FROM `playdates`, dogs WHERE dog2=$dogID AND dogs.id = playdates.dog1 AND accepted = false ORDER BY date ASC; ";
     $result = $GLOBALS['mysqli']->query($requestedPlaydateQuery);
     $data = NULL;
     while($row =  $result->fetch_assoc()){
         $data[] = $row;
     }
     $requestedPlaydates = json_encode($data);
-    $upcomingPlaydateQuery = "SELECT dogs.id as id, name as dname, image, date, message FROM `playdates`, dogs WHERE ((dog2=$dogID AND dogs.id = playdates.dog1) OR (dog1 = $dogID AND dogs.id = playdates.dog2)) AND accepted = true ;";
+    $upcomingPlaydateQuery = "SELECT dogs.id as id, name as dname, image, date, message FROM `playdates`, dogs WHERE ((dog2=$dogID AND dogs.id = playdates.dog1) OR (dog1 = $dogID AND dogs.id = playdates.dog2)) AND accepted = true ORDER BY date ASC;";
     $result = $GLOBALS['mysqli']->query($upcomingPlaydateQuery);
     $data = NULL;
     while($row =  $result->fetch_assoc()){
