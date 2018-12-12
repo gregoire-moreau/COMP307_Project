@@ -12,12 +12,12 @@
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
                         // server response string goes into data
-                        var data = JSON.parse(request.responseText);
+                        data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
                         if(data.requestedPlaydates != null){
                             //id, dname, image, date, message
                             for(let i=0; i<data.requestedPlaydates.length; i++){
-                                addBox("RDGrid", data.requestedPlaydates[i].id, data.requestedPlaydates[i].dname, data.requestedPlaydates[i].image, data.requestedPlaydates[i].date, data.requestedPlaydates[i].message); 
+                                addBox("RDGrid", data.requestedPlaydates[i].id, data.requestedPlaydates[i].dname, data.requestedPlaydates[i].image, data.requestedPlaydates[i].date, data.requestedPlaydates[i].message, i); 
                             }
                         } else {
                             document.getElementById("RDGrid").style.display = "none";
@@ -26,7 +26,7 @@
                         if(data.upcomingPlaydates != null){
                             //id, dname, image, date, message
                             for(let i=0; i<data.upcomingPlaydates.length; i++){
-                                addBox("DatesGrid", data.upcomingPlaydates[i].id, data.upcomingPlaydates[i].dname, data.upcomingPlaydates[i].image, data.upcomingPlaydates[i].date, data.upcomingPlaydates[i].message); 
+                                addBox("DatesGrid", data.upcomingPlaydates[i].id, data.upcomingPlaydates[i].dname, data.upcomingPlaydates[i].image, data.upcomingPlaydates[i].date, data.upcomingPlaydates[i].message, i); 
                             }
                         } else {
                             document.getElementById("DatesGrid").style.display = "none";
@@ -38,7 +38,7 @@
                 }
             }
             
-            function addBox(grid, id, name, image, date, message) {
+            function addBox(grid, id, name, image, date, message, index) {
                 var div = document.createElement('div');
                 div.setAttribute('class','grid-item-big');  
                 div.setAttribute('style','text-align: left; word-wrap: break-word; position: relative');  
@@ -82,7 +82,7 @@
                     b1.appendChild(txt);
                     b1.setAttribute('class','form');
                     b1.setAttribute('style',"font-size: .75em; position: absolute; bottom: 15px; margin-left: 35px");
-                    b1.setAttribute("onclick", "answer("+id+","+date+",true)");
+                    b1.setAttribute("onclick", "answer("+id+","+index+",true)");
                     div.appendChild(b1);
 
                     
@@ -91,14 +91,15 @@
                     b2.appendChild(txt);
                     b2.setAttribute('class','form');
                     b2.setAttribute('style',"font-size: .75em; position: absolute; bottom: 15px; margin-left: 115px");
-                    b2.setAttribute("onclick", "answer("+id+","+date+",false)"); 
+                    b2.setAttribute("onclick", "answer("+id+","+index+",false)"); 
                     div.appendChild(b2);
                 } 
                 
             }
             
             var playdate;
-            function answer(dogID, date, answer) {
+            function answer(dogID, i, answer) {
+                var date = data.requestedPlaydates[i].date;
                 var a1 = ["dogID", "date", "answer"];
                 var a2 = [dogID, date, answer];
                 var payload = formatAsJSON(a1, a2);
@@ -110,7 +111,7 @@
             function answerReceived() {
                 if (playdate.readyState == 4 && playdate.status == 200) {
                     if (playdate.responseText != null) {
-                        var data = JSON.parse(playdate.responseText);
+                        let data = JSON.parse(playdate.responseText);
                         if (data.status) {
                             alert("Succesful action!");
                             window.open("playdates.html","_self");
