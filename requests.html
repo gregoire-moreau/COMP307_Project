@@ -13,6 +13,10 @@
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
+                        if (request.responseText.length < 1) {
+                            alert("Please login.");
+                            window.open("ABNBHome.html", "_self");
+                        }
                         // server response string goes into data
                         data = JSON.parse(request.responseText);
                         document.getElementById("fname").innerHTML = data.fname;
