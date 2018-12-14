@@ -1,6 +1,6 @@
 All Bark No Bite
 Team Members: Jen Gahrns, Grégoire Moreau, Eric Choinière
-Points: 13
+Points: 14
 Browsers: Google Chrome and Mozilla Firefox.
 
 Jen
@@ -15,6 +15,7 @@ Eric
 Grégoire
 - SQL
 - SLIM
+- PHP
 
 NB: 
 *Eric also wrote several JavaScript functions, such as the sorting algorithm for suggested friends. 
@@ -22,12 +23,13 @@ NB:
 
 How to run:
 1. Copy the project folder into the htdocs folder of your XAMPP installation
-2. Configure XAMPP to allow uploads up to 5MB (change line 818 in php.ini to "upload_max_filesize=5M")
+2. Configure XAMPP to allow uploads up to 5MB (change line 818 in xampp/php/php.ini to "upload_max_filesize=5M")
 3. Start Apache and MySQL in XAMPP
 4. Import the database :
     i. Access localhost/phpmyadmin with your browser
     ii. Go to Import and browse to the "allbarknobite.sql" file in this folder
-    iii. Click Execute
+    iii. Uncheck the "Enable foreign key checks" options
+    iv. Click Go
 5. Access localhost/COMP307_Project with your browser
 6. Sign up an account through the link on the Login page
 7. Log in to your account and explore the following functionalities :
