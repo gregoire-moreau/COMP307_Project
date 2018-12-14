@@ -18,7 +18,8 @@
                             window.open("ABNBHome.html", "_self");
                         }
                         // server response string goes into data
-                        data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        data = JSON.parse(decrypt);
                         document.getElementById("fname").innerHTML = data.fname;
                         if (data.pendingRequests != null) {
                             indexReq = 0;
@@ -282,7 +283,6 @@
                 var a1 = ["dogID"];
                 var a2 = [dogID];
                 var payload = formatAsJSON(a1, a2);
-                alert(encrypt(payload));
                 bark = new XMLHttpRequest();
                 bark.open("POST", "friendrequest", true);
                 bark.addEventListener("readystatechange", barkReceived, false);
@@ -291,7 +291,8 @@
             function barkReceived() {
                 if (bark.readyState == 4 && bark.status == 200) {
                     if (bark.responseText != null) {
-                        var data = JSON.parse(bark.responseText);
+                        var decrypted = decrypt(bark.responseText);
+                        var data = JSON.parse(decrypted);
                         if (data.status) {
                             alert("Succesfully barked!");
                             window.open("requests.html","_self");
@@ -308,7 +309,6 @@
                 var a1 = ["dogID", "answer"];
                 var a2 = [dogID, answer];
                 var payload = formatAsJSON(a1, a2);
-                alert(encrypt(payload));
                 barkBack = new XMLHttpRequest();
                 barkBack.open("POST", "acceptrequest", true);
                 barkBack.addEventListener("readystatechange", barkBackReceived, false);
@@ -317,7 +317,8 @@
             function barkBackReceived() {
                 if (barkBack.readyState == 4 && barkBack.status == 200) {
                     if (barkBack.responseText != null) {
-                        var data = JSON.parse(barkBack.responseText);
+                        var decrypted = decrypt(barkBack.responseText);
+                        var data = JSON.parse(decrpyted);
                         if (data.status) {
                             alert("Succesful action!");
                             window.open("requests.html","_self");

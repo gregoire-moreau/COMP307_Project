@@ -15,7 +15,8 @@
                     }
                     if (request.responseText != null) {
                         // server response string goes into data
-                        data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        data = JSON.parse(decrypted);
                         document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("dname").innerHTML = data.dname;
                         if(data.friends != null){

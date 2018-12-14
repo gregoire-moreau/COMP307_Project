@@ -16,12 +16,13 @@ function formatAsJSON(a1, a2) {
         }
     }
     json += '}';
-    return json;
+    var encrypted = encrypt(json);
+    return encrypted;
 }
 
 var key = [5, 1, 4];
 
-function encrypt(var str) {
+function encrypt(str) {
     var ciphered = "";
     let j = 0;
     for (let i = 0; i < str.length; i++) {
@@ -31,16 +32,16 @@ function encrypt(var str) {
         }
         ascii += key[j];
         ascii = ascii%127;
-        ciphered = ascii.toString() + ciphered;
+        ciphered = String.fromCharCode(ascii) + ciphered;
         j++;
     }
     return ciphered;
 }
 
-function decrypt(var str) {
+function decrypt(str) {
     var deciphered = "";
     let j = 0;
-    for (let i = str.lentgh-1; i >= 0; i--) {
+    for (let i = str.length-1; i >= 0; i--) {
         var ascii = str.charCodeAt(i);
         if (j >= key.length) {
             j = 0;
@@ -49,7 +50,7 @@ function decrypt(var str) {
         while (ascii < 0) {
             ascii += 127;
         }
-        deciphered = ascii.toString() + deciphered;
+        deciphered = deciphered + String.fromCharCode(ascii);
         j++;
     }
     return deciphered;  

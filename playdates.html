@@ -16,7 +16,8 @@
                     }
                     if (request.responseText != null) {
                         // server response string goes into data
-                        data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        data = JSON.parse(decrypted);
                         document.getElementById("fname").innerHTML = data.fname;
                         if(data.requestedPlaydates != null){
                             //id, dname, image, date, message
@@ -115,7 +116,8 @@
             function answerReceived() {
                 if (playdate.readyState == 4 && playdate.status == 200) {
                     if (playdate.responseText != null) {
-                        let data = JSON.parse(playdate.responseText);
+                        var decrypted = decrypt(playdate.responseText);
+                        let data = JSON.parse(decrypted);
                         if (data.status) {
                             alert("Succesful action!");
                             window.open("playdates.html","_self");

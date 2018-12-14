@@ -16,7 +16,8 @@
                     }
                     if (request.responseText != null) {
                         // server response string goes into data
-                        var data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        var data = JSON.parse(decrypted);
                         document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("owner").innerHTML = data.fname; 
                         document.getElementById("dog").innerHTML = data.dname; 
@@ -69,7 +70,7 @@
         </script>
 	</head> 
 	
-	<body>
+	<body onload="load('main')">
 		<div class="sidebar">
             <div style="font-weight: 600; text-align: center">
                 Welcome, <span id="fname">User</span>!
@@ -102,7 +103,7 @@
         </div>
         
         
-        <div class="theme" style="text-align: justify; font-size: 3em; font-weight: 700; padding-left: 20%; padding-top: 3%"> 
+        <div class="theme" style="text-align: justify; font-size: 3em; font-weight: 700; padding-left: 20%; padding-top: 3%">
             Hi there, <span id="owner"> owner </span> and <span id="dog"> dog </span>! 
             <br>
             Here's what's new: 
@@ -117,9 +118,6 @@
             <br><br><br><br><br><br><br><br>
             <a class="mainbutton" href="playdates.html" > <span id="datereqs"> </span> </a>
         </div>
-
-        
-     
         
 	</body>
 </html> 

@@ -16,7 +16,8 @@
                     }
                     if (request.responseText != null) {
                         // server response string goes into data
-                        var data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        var data = JSON.parse(decrypted);
                         document.getElementById("fname").innerHTML = data.fname;
                         document.getElementById("dname").innerHTML = data.dname;
                         document.getElementById("name").innerHTML = data.dname; 
@@ -51,7 +52,8 @@
             function imageReceived(){
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
-                        var data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        var data = JSON.parse(decrypted);
                         if (data.status) {
                             document.getElementById("photo").setAttribute("src", "uploads/"+data.image);
                         } else {
