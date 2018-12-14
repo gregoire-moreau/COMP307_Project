@@ -28,7 +28,7 @@
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
                         var decrypted = decrypt(request.responseText);
-                        var data = JSON.parse(decrypt);
+                        var data = JSON.parse(decrypted);
                         if (data.status) {
                             alert("Scheduled the playdate!")
                             selfClose();

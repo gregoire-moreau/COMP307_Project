@@ -52,16 +52,12 @@ $app->post('/login', function($request, $response) {
 $app->post('/profile', function($request, $response) {
     if (checkSessionID()){
         require_once('profile.php');
-    } else{
-        include 'ABNBHome.html';
     }
 });
 
 $app->post('/playdates', function($request, $response) {
     if (checkSessionID()){
         require_once('playdates.php');
-    }else{
-        include 'ABNBHome.html';
     }
 });
 
@@ -69,24 +65,18 @@ $app->post('/receive_image', function($request, $response) {
     file_put_contents("test.log", "heddre");
     if (checkSessionID()){
         require_once('receive_image.php');
-    }else{
-        include 'ABNBHome.html';
     }
 });
 
 $app->post('/friends', function($request, $response) {
     if (checkSessionID()){
         require_once('friends.php');
-    }else{
-        include 'ABNBHome.html';
     }
 });
 
 $app->post('/not_friends', function($request, $response) {
     if (checkSessionID()){
         require_once('pending_requests.php');
-    }else{
-        include 'ABNBHome.html';
     }
 });
 
@@ -113,8 +103,6 @@ $app->post('/playdate_request', function($request, $response){
 $app->post('/main', function($request, $response){
     if(checkSessionID()){
         require_once('main.php');
-    } else{
-        include 'ABNBHome.html';
     }
 });
 
