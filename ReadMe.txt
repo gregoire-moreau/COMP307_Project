@@ -30,7 +30,7 @@ How to run:
     ii. Go to Import and browse to the "allbarknobite.sql" file in this folder
     iii. Uncheck the "Enable foreign key checks" options
     iv. Click Go
-5. Access localhost/COMP307_Project with your browser
+5. Access localhost/COMP307_Project with your browser or open CLICKME.html and click on the link
 6. Sign up an account through the link on the Login page
 7. Log in to your account and explore the following functionalities :
 	* Upload a picture of your dog through the profile page
