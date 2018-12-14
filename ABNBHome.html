@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html> 
 	<head> 
         <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
@@ -9,7 +8,7 @@
         <script>
             var request;
             var uname;
-            
+            // verifies login information and sends it to the server
             function login() {
                 // part 1: process login info
                 uname = document.getElementById("uname").value;
@@ -32,11 +31,12 @@
                 request.send(payload);
                 return false;
             }
-
+            // callback function that takes the user to the main page on successful login
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
-                        var data = JSON.parse(request.responseText);
+                        var decrypted = decrypt(request.responseText);
+                        var data = JSON.parse(decrypted);
                         if (data.status) {
                             window.open('main.html', '_self');
                         } else {

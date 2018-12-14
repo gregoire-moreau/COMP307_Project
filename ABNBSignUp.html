@@ -1,199 +1,195 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
+        <title> All Bark No Bite </title>
+        <script src="scripts/hash.js"></script>
+        <script src="scripts/json.js"></script>
+        <script>
+            var request;
+            // verifies signup information and sends it to the server
+            function signup() {
+                // part 1: process login info
+                var fname = document.getElementById("fname").value;
+                var lname = document.getElementById("lname").value;
+                var email = document.getElementById("email").value;
+                var uname = document.getElementById("uname").value;
+                var password = document.getElementById("password").value;
+                var password2 = document.getElementById("password2").value;
+                var dname = document.getElementById("dname").value;
+                var breed = document.getElementById("breed").value;
+                var age = document.getElementById("age").value;
+                var location = document.getElementById("location").value;
+                var act1 = document.getElementById("act1").value;
+                var act2 = document.getElementById("act2").value;
+                var act3 = document.getElementById("act3").value;
+                if (uname.length <= 1) {
+                    alert("Username must be at least 2 characters.");
+                    return false;
+                }
+                if (password.length < 8) {
+                    alert("Password must be at least 8 characters.");
+                    return false;
+                }
+                if (password != password2) {
+                    alert("Passwords do not match.");
+                    return false;
+                }
+                if (fname.length <= 1) {
+                    alert("First name must be at least 2 characters.");
+                    return false;
+                }
+                if (email.length <= 1) {
+                    alert("Email must be at least 2 characters.");
+                    return false;
+                }
 
-<head>
-    <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
-    <title> All Bark No Bite </title>
-    <script src="scripts/hash.js"></script>
-    <script src="scripts/json.js"></script>
-    <script>
-        var request;
-        function signup() {
-            // part 1: process login info
-            var fname = document.getElementById("fname").value;
-            var lname = document.getElementById("lname").value;
-            var email = document.getElementById("email").value;
-            var uname = document.getElementById("uname").value;
-            var password = document.getElementById("password").value;
-            var password2 = document.getElementById("password2").value;
-            var dname = document.getElementById("dname").value;
-            var breed = document.getElementById("breed").value;
-            var age = document.getElementById("age").value;
-            var location = document.getElementById("location").value;
-            var act1 = document.getElementById("act1").value;
-            var act2 = document.getElementById("act2").value;
-            var act3 = document.getElementById("act3").value;
-            if (uname.length <= 1) {
-                alert("Username must be at least 2 characters.");
-                return false;
-            }
-            if (password.length < 8) {
-                alert("Password must be at least 8 characters.");
-                return false;
-            }
-            if (password != password2) {
-                alert("Passwords do not match.");
-                return false;
-            }
-            if (fname.length <= 1) {
-                alert("First name must be at least 2 characters.");
-                return false;
-            }
-            if (email.length <= 1) {
-                alert("Email must be at least 2 characters.");
-                return false;
-            }
-            
-            email = email.replace(/\s+/g, '');
-            uname = uname.replace(/\s+/g, '');
-            // bis for other variables...
-            password = password.replace(/\s+/g, '');
-            password = hash(password);
-            // part 2: POST to server
-            var a1 = ["fname","lname","email","location","uname", "password","dname","breed","age","act1","act2","act3"];
-            var a2 = [fname, lname, email, location, uname, password, dname, breed, age, act1, act2, act3];
-            var payload = formatAsJSON(a1, a2);
-            request = new XMLHttpRequest();
-            request.open("POST", 'signup', true);
-            request.addEventListener("readystatechange", requestReceived, false);
-            request.send(payload);
-            return false;
-        }
+                email = email.replace(/\s+/g, '');
+                uname = uname.replace(/\s+/g, '');
+                password = password.replace(/\s+/g, '');
+                password = hash(password);
 
-        function requestReceived() {
-            if (request.readyState == 4 && request.status == 200) {
-                if (request.responseText != null) {
-                    var data = JSON.parse(request.responseText);
-                    if (data.status) {
-                        alert("Signup succesful!");
-                        window.open("ABNBHome.html", "_self");
+                // part 2: POST to server
+                var a1 = ["fname","lname","email","location","uname", "password","dname","breed","age","act1","act2","act3"];
+                var a2 = [fname, lname, email, location, uname, password, dname, breed, age, act1, act2, act3];
+                var payload = formatAsJSON(a1, a2);
+                request = new XMLHttpRequest();
+                request.open("POST", 'signup', true);
+                request.addEventListener("readystatechange", requestReceived, false);
+                request.send(payload);
+                return false;
+            }
+            // callback function that takes the user to the login page on successful signup
+            function requestReceived() {
+                if (request.readyState == 4 && request.status == 200) {
+                    if (request.responseText != null) {
+                        var decrypted = decrypt(request.responseText);
+                        var data = JSON.parse(decrypted);
+                        if (data.status) {
+                            alert("Signup succesful!");
+                            window.open("ABNBHome.html", "_self");
+                        } else {
+                            alert(data.errorMessage);
+                        }
                     } else {
-                        alert(data.errorMessage);
+                        alert("Something went wrong. Try again later.");
                     }
-                } else {
-                    alert("Something went wrong. Try again later.");
                 }
             }
-        }
-    </script>
- 
-</head> 
+        </script>
+    </head> 
 
-<body>
-    
-    <div class="theme">
-       <p style="font-size: 1.5em; background-color: white; border-radius: 8px; box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; padding: 20px;"> We're so happy you've decided to get barking with us! Please take a few minutes to help us get you signed up.</p>
-    
-    <form onsubmit="return signup()">
-        <p style="font-size: 1.5em">Please enter your personal information:</p>
-        <br>
-    
-        <input type="text" id="fname" name="fname" placeholder="First name" class="form" maxlength="20" required>
-        <br>
-        <br>
-        
-        <input type="text" id="lname" name="lname" placeholder="Last name" class="form" maxlength="20" required>
-        <br>
-        <br>
+    <body>
 
-        <input type="text" id="email" name="email" placeholder="Email" class="form" maxlength="40"required>
-        <br>
-        <br>
+        <div class="theme">
+           <p style="font-size: 1.5em; background-color: white; border-radius: 8px; box-shadow: 1px 1px 2px black, 0 0 25px #218287, 0 0 5px #144760; padding: 20px;"> We're so happy you've decided to get barking with us! Please take a few minutes to help us get you signed up.</p>
 
-        <input type="text" id="uname" name="uname" placeholder="Username" class="form" maxlength="20" required>
-        <br>
-        <br>
+        <form onsubmit="return signup()">
+            <p style="font-size: 1.5em">Please enter your personal information:</p>
+            <br>
 
-        <input type="password" id="password" name="password" placeholder="Password" class="form" required>
-        <br>
-        <br>
-        <input type="password" id="password2" name="password2" placeholder="Confirm password" class="form" required>
-        <br>
-        <br>
+            <input type="text" id="fname" name="fname" placeholder="First name" class="form" maxlength="20" required>
+            <br>
+            <br>
 
-        <p style="font-size: 1.5em"> Select your location:</p>
-        
-        <br>
-        <select id="location" name="location" class="form">
-        <option value="Downtown">Downtown</option>
-        <option value="Plateau">Plateau</option>
-        <option value="Mile-end">Mile-end</option>
-        <option value="Outremont">Outremont</option>
-        <option value="Westmount">Westmount</option>
-        </select>
-        <br>
-        </form>
-    </div>
+            <input type="text" id="lname" name="lname" placeholder="Last name" class="form" maxlength="20" required>
+            <br>
+            <br>
 
-    <div class="theme" >
-        <form theme="form" onsubmit="return signup()">
-        <p style="font-size: 1.5em">Please enter your dog's information:</p>
-        <br>
+            <input type="text" id="email" name="email" placeholder="Email" class="form" maxlength="40"required>
+            <br>
+            <br>
 
-        <input type="text" id="dname" name="dname" placeholder="Name" class="form" maxlength="20" required>
-        <br>
-        <br>
-        <input type="text" id="breed" name="breed" placeholder="Breed" class="form" maxlength="30" required>
-        <br>
-        <br>
-        <input type="number" min="0" max="20" id="age" name="age" placeholder="Age" class="form" style="width: 5em" required>
-        <br>
-        <br>
-        <p style="font-size: 1.5em"> Select your dog's favourite activities:</p>
-        <br>
-        <select id="act1" name="act1" class="form" required>
-            <option value="" disabled selected>Activity 1</option>
-            <option value="Fetch">Fetch</option>
-            <option value="Running">Running</option>
-            <option value="Playing with toys">Playing with toys</option>
-            <option value="Playing with other dogs">Playing with other dogs</option>
-            <option value="Walks">Walks</option>
-            <option value="Frisbee">Frisbee</option>
-            <option value="Hiking">Hiking</option>
-            <option value="Cuddling">Cuddling</option>
-            <option value="Wrestling">Wrestling</option>
-            <option value="Chase">Chase</option>
-        </select>
-        <br>
-        <br>
-        <select id="act2" name="act2" class="form" required>
-            <option value="" disabled selected>Activity 2</option>
-            <option value="Fetch">Fetch</option>
-            <option value="Running">Running</option>
-            <option value="Playing with toys">Playing with toys</option>
-            <option value="Playing with other dogs">Playing with other dogs</option>
-            <option value="Walks">Walks</option>
-            <option value="Frisbee">Frisbee</option>
-            <option value="Hiking">Hiking</option>
-            <option value="Cuddling">Cuddling</option>
-            <option value="Wrestling">Wrestling</option>
-            <option value="Chase">Chase</option>
-        </select>
-        <br>
-        <br>
-        <select id="act3" name="act3" class="form" required>
-            <option value="" disabled selected>Activity 3</option>
-            <option value="Fetch">Fetch</option>
-            <option value="Running">Running</option>
-            <option value="Playing with toys">Playing with toys</option>
-            <option value="Playing with other dogs">Playing with other dogs</option>
-            <option value="Walks">Walks</option>
-            <option value="Frisbee">Frisbee</option>
-            <option value="Hiking">Hiking</option>
-            <option value="Cuddling">Cuddling</option>
-            <option value="Wrestling">Wrestling</option>
-            <option value="Chase">Chase</option>
-        </select>
-        <br>
-        <br>
-        <input type="submit" value="Submit" class="form">
-        <br>
-        <br>
-        </form>
-    </div>
+            <input type="text" id="uname" name="uname" placeholder="Username" class="form" maxlength="20" required>
+            <br>
+            <br>
 
+            <input type="password" id="password" name="password" placeholder="Password" class="form" required>
+            <br>
+            <br>
+            <input type="password" id="password2" name="password2" placeholder="Confirm password" class="form" required>
+            <br>
+            <br>
 
-</body> 
+            <p style="font-size: 1.5em"> Select your location:</p>
 
+            <br>
+            <select id="location" name="location" class="form">
+            <option value="Downtown">Downtown</option>
+            <option value="Plateau">Plateau</option>
+            <option value="Mile-end">Mile-end</option>
+            <option value="Outremont">Outremont</option>
+            <option value="Westmount">Westmount</option>
+            </select>
+            <br>
+            </form>
+        </div>
 
+        <div class="theme" >
+            <form theme="form" onsubmit="return signup()">
+            <p style="font-size: 1.5em">Please enter your dog's information:</p>
+            <br>
+
+            <input type="text" id="dname" name="dname" placeholder="Name" class="form" maxlength="20" required>
+            <br>
+            <br>
+            <input type="text" id="breed" name="breed" placeholder="Breed" class="form" maxlength="30" required>
+            <br>
+            <br>
+            <input type="number" min="0" max="20" id="age" name="age" placeholder="Age" class="form" style="width: 5em" required>
+            <br>
+            <br>
+            <p style="font-size: 1.5em"> Select your dog's favourite activities:</p>
+            <br>
+            <select id="act1" name="act1" class="form" required>
+                <option value="" disabled selected>Activity 1</option>
+                <option value="Fetch">Fetch</option>
+                <option value="Running">Running</option>
+                <option value="Playing with toys">Playing with toys</option>
+                <option value="Playing with other dogs">Playing with other dogs</option>
+                <option value="Walks">Walks</option>
+                <option value="Frisbee">Frisbee</option>
+                <option value="Hiking">Hiking</option>
+                <option value="Cuddling">Cuddling</option>
+                <option value="Wrestling">Wrestling</option>
+                <option value="Chase">Chase</option>
+            </select>
+            <br>
+            <br>
+            <select id="act2" name="act2" class="form" required>
+                <option value="" disabled selected>Activity 2</option>
+                <option value="Fetch">Fetch</option>
+                <option value="Running">Running</option>
+                <option value="Playing with toys">Playing with toys</option>
+                <option value="Playing with other dogs">Playing with other dogs</option>
+                <option value="Walks">Walks</option>
+                <option value="Frisbee">Frisbee</option>
+                <option value="Hiking">Hiking</option>
+                <option value="Cuddling">Cuddling</option>
+                <option value="Wrestling">Wrestling</option>
+                <option value="Chase">Chase</option>
+            </select>
+            <br>
+            <br>
+            <select id="act3" name="act3" class="form" required>
+                <option value="" disabled selected>Activity 3</option>
+                <option value="Fetch">Fetch</option>
+                <option value="Running">Running</option>
+                <option value="Playing with toys">Playing with toys</option>
+                <option value="Playing with other dogs">Playing with other dogs</option>
+                <option value="Walks">Walks</option>
+                <option value="Frisbee">Frisbee</option>
+                <option value="Hiking">Hiking</option>
+                <option value="Cuddling">Cuddling</option>
+                <option value="Wrestling">Wrestling</option>
+                <option value="Chase">Chase</option>
+            </select>
+            <br>
+            <br>
+            <input type="submit" value="Submit" class="form">
+            <br>
+            <br>
+            </form>
+        </div>
+    </body> 
 </html>

@@ -1,3 +1,4 @@
+// returns an 8-character hash string
 function hash(password) {
     var msg = password;
     var interim = "";
@@ -10,7 +11,7 @@ function hash(password) {
         var code = msg.charCodeAt(i);
         interim += code.toString();
         if (salt) {
-            interim += prev.toString(); // "salt" the string by deterministically adding extra characters
+            interim += prev.toString();
             salt = false;
         } else {
             prev = (prev+code)%10;

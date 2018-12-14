@@ -3,11 +3,11 @@
 <html> 
 	<head> 
         <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
-        <title> All Bark No Bite </title>
-        
+        <title> All Bark No Bite </title>   
         <script src="scripts/load.js"></script>
         <script src="scripts/json.js"></script>
         <script>
+            // callback function that populates main page HTML on successful authentification
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText.length < 1) {
@@ -33,26 +33,26 @@
                     }
                 }
             }
-            var request;
+            var imgRequest;
+            // sends user-uploaded image to server
             function imagePost(){
-                    
                     const files = document.querySelector('[type=file]').files;
                     const formData = new FormData();
                     
                     let file = files[0]; 
                     formData.append('files[]', file); 
-                    request = new XMLHttpRequest();
-                    request.open("POST", './receive_image', true);
-                    request.addEventListener("readystatechange", imageReceived, false);
-                    request.send(formData);
+                    imgRequest = new XMLHttpRequest();
+                    imgRequest.open("POST", './receive_image', true);
+                    imgRequest.addEventListener("readystatechange", imageReceived, false);
+                    imgRequest.send(formData);
                     
                     return false;
             }
-
+            // callback function that retrieves the uploaded photo on successful upload
             function imageReceived(){
-                if (request.readyState == 4 && request.status == 200) {
-                    if (request.responseText != null) {
-                        var decrypted = decrypt(request.responseText);
+                if (imgRequest.readyState == 4 && imgRequest.status == 200) {
+                    if (imgRequest.responseText != null) {
+                        var decrypted = decrypt(imgRequest.responseText);
                         var data = JSON.parse(decrypted);
                         if (data.status) {
                             document.getElementById("photo").setAttribute("src", "uploads/"+data.image);
@@ -64,11 +64,6 @@
                     }
                 }
             }
-          
-            function logout(){
-                window.open("logout", "_self");
-            }
-            
         </script>
 	</head> 
 	
@@ -132,8 +127,6 @@
                 Age: <span id="age"></span>
                 <br>
                 <br>
-
-
                 <span id="name"> Dog </span> loves... 
 
                 <ul>
@@ -143,11 +136,8 @@
                     <br>
                     <li id="act3"> Activity 3</li>
                     <br>
-
                 </ul>
-
             </div>
-        </div>
-        
+        </div> 
 	</body>
 </html> 

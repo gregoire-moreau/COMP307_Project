@@ -1,3 +1,4 @@
+// opens a window showing a dog's profile page
 function showProfile(dname, breed, age, act1, act2, act3, image) {
     var title = dname + "'s Profile";
     var win = window.open("showprofile.html", 'Profile', "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" + screen.width + ",height="+ screen.height);
@@ -13,7 +14,7 @@ function showProfile(dname, breed, age, act1, act2, act3, image) {
         win.document.getElementById("photo").setAttribute("src", "uploads/"+image);
      }      
 }
-
+// opens a window containing a playdate form
 function schedule(id) {
     var win = window.open("playdateform.html", '', "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" + screen.width + ",height="+ screen.height);
     

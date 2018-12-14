@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-
 <html> 
 	<head> 
         <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
-        
-       
         <script src="scripts/load.js"></script>
         <script src="scripts/json.js"></script>
         <script>
+            // callback function that populates main page HTML on successful authentification
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText.length < 1) {
@@ -55,17 +53,10 @@
                         else{
                             document.getElementById("datereqs").innerHTML = "You have "+datereqs+" new playdate requests!";
                         }
-                        
-                        
-                        
                     } else {
                         alert("Something went wrong. Main could not be loaded.");
                     }
                 }
-            }
-            
-            function logout(){
-                window.open("logout", "_self");
             }
         </script>
 	</head> 
@@ -99,10 +90,7 @@
             <div style="padding-bottom: 5%; text-align: left">
                 <button class="form" style="font-size: .75em" onclick="logout()">Logout</button>
             </div>
-
-        </div>
-        
-        
+        </div>    
         <div class="theme" style="text-align: justify; font-size: 3em; font-weight: 700; padding-left: 20%; padding-top: 3%">
             Hi there, <span id="owner"> owner </span> and <span id="dog"> dog </span>! 
             <br>
@@ -117,7 +105,6 @@
             <a class="mainbutton" href="playdates.html" > <span id="playdates"> </span> </a>
             <br><br><br><br><br><br><br><br>
             <a class="mainbutton" href="playdates.html" > <span id="datereqs"> </span> </a>
-        </div>
-        
+        </div>      
 	</body>
 </html> 

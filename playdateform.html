@@ -5,6 +5,7 @@
         <title> All Bark No Bite </title>
         <script src="scripts/json.js"></script>
         <script>
+            // sends playdate info to the server
             var request;
             function schedule() {
                 // part 1: process info
@@ -22,7 +23,7 @@
                 request.send(payload);
                 return false;
             }
-
+            // callback function for the playdate
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
@@ -39,7 +40,7 @@
                     }
                 }
             }
-            
+            // closes window
             function selfClose() {
                 window.open("", "_self");
                 window.close();
@@ -48,9 +49,8 @@
     </head>
     
     <body> 
-        
         <div class="theme"> 
-           <p style="font-weight: 700; font-size: 2em"> Schedule a playdate: </p>
+            <p style="font-weight: 700; font-size: 2em"> Schedule a playdate: </p>
             <br>
             <br>
             <form style="text-align: center" onsubmit="return schedule()">
@@ -64,7 +64,5 @@
                 <input type="submit" value="Submit" class="form">
             </form>
         </div>
-    
     </body>
-
 </html>

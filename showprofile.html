@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!-- should only be opened through showProfile() from profile.js -->
 <html> 
 	<head> 
-        <title> All Bark No Bite </title>
         <link rel = "stylesheet" type = "text/css" href = "StyleSheet.css" />
-        
+        <title> All Bark No Bite </title>
         <script>
+            // closes window
             function selfClose() {
                 window.open("", "_self");
                 window.close();
@@ -16,7 +15,7 @@
 	<body>
         <div class="profile" style="margin-left: 275px; position: relative">  
             <div style="float: right">
-                 <div class="photo">
+                <div class="photo">
                      <img class="autoresize" id="photo" src="uploads/dog.png" style="width: 100%; height: 100%" >
                 </div>
             </div>
@@ -31,7 +30,6 @@
                 Age: <span id="age"></span>
                 <br>
                 <br>
-
                 <span id="name"> Dog </span> loves... 
 
                 <ul>
@@ -41,14 +39,10 @@
                     <br>
                     <li id="act3"> Activity 3</li>
                     <br>
-
                 </ul>
-
             </div>
             <br>
             <button style="font-family: Courier New, monospace; font-size: .75em; position: absolute; bottom: 25px; right: 375px" onclick="selfClose()">Close this window</button>
-        </div>
-       
-        
+        </div>     
 	</body>
 </html> 

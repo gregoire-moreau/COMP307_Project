@@ -9,7 +9,7 @@
         <script>
             var indexReq;
             var indexSug;
-            
+            // callback function that populates main page HTML on successful authentification
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText != null) {
@@ -21,6 +21,8 @@
                         var decrypted = decrypt(request.responseText);
                         data = JSON.parse(decrypt);
                         document.getElementById("fname").innerHTML = data.fname;
+                        
+                        // display barks from other dogs
                         if (data.pendingRequests != null) {
                             indexReq = 0;
                             var req = data.pendingRequests[indexReq];
@@ -50,6 +52,7 @@
                             document.getElementById("nobarks").innerHTML = "You do not have any bark requests.";
                         }
                         
+                        // display unfriended dogs in the same area
                         if (data.otherDogs != null) {
                             if (data.otherDogs.length > 1) {
                                 sortSuggestions();
@@ -81,14 +84,12 @@
                             document.getElementById("SuggestionsGrid").style.display = "none";
                             document.getElementById("nosuggestions").innerHTML = "No unfriended dogs in your location.";
                         }
-                        
-                        
                     } else {
                         alert("Something went wrong. Requests could not be loaded.");
                     }
                 }
             }
-            
+            // sort the friend suggestions by matching favourite activities
             function sortSuggestions() {
                 var suggestions = new Array();
                 var max;
@@ -116,7 +117,7 @@
                 
                 data.otherDogs = suggestions;
             }
-            
+            // helper method to compare two dog's "scores"
             function compareDogs(dog1, dog2) {
                 if (scoreDog(dog1) >= scoreDog(dog2)) {
                     return 1;
@@ -124,7 +125,7 @@
                     return 0;
                 }
             }
-            
+            // "scores" a dog according to the number of favourite activities it shares with the user's dog
             function scoreDog(dog) {
                 var score = 0;
                 if (dog.act1 == data.act1 || dog.act1 == data.act2 || dog.act1 == data.act3) {
@@ -138,7 +139,7 @@
                 }
                 return score;
             }
-            
+            // displays up to 3 more barks
             function moreRequests() {
                 var req = data.pendingRequests[indexReq];
                 replaceBox("RequestsGrid",'r1',req.id,req.dname,req.image, indexReq);
@@ -163,7 +164,7 @@
                     document.getElementById("morerequests").style.display = "none";
                 }
             }
-            
+            // displays up to 3 more unfriended dogs
             function moreSuggestions() {
                 var sug = data.otherDogs[indexSug];
                 replaceBox("SuggestionsGrid",'s1',sug.id,sug.dname,sug.image, indexSug);
@@ -188,9 +189,7 @@
                     document.getElementById("moresuggestions").style.display = "none";
                 }
             }
-            
-            // grid id, box id, dog id, dog name, dog image
-            // USE: called from replaceBox()
+            // creates a grid item with dog info to replace a current one
             function createBox(grid, box, id, name, image, i) {
                 var div = document.createElement('div');
                 div.setAttribute('id', box);
@@ -245,14 +244,12 @@
                 
                 return div;
             }
-            
-            
-            // grid id, box id, dog id, dog name, dog image
+            // replaces one of three grid items with a new one
             function replaceBox(grid, box, id, name, image, i) {
                 var div = createBox(grid, box, id, name, image, i);
                 document.getElementById(grid).replaceChild(div, document.getElementById(box));
             }
-            
+            // sends dog info to a script to display a full dog profile
             function helper(i, grid){
                 if(grid.id == "RequestsGrid"){
                     var name = data.pendingRequests[i].dname; 
@@ -273,11 +270,9 @@
                     var a3 = data.otherDogs[i].act3; 
                     var image = data.otherDogs[i].image; 
                     showProfile(name, breed, age, a1, a2, a3, image); 
-                }
-                
-                
+                } 
             }
-            
+            // sends a bark to the server
             var bark;
             function bark(dogID) {
                 var a1 = ["dogID"];
@@ -288,6 +283,7 @@
                 bark.addEventListener("readystatechange", barkReceived, false);
                 bark.send(payload);
             }
+            // callback function for the bark
             function barkReceived() {
                 if (bark.readyState == 4 && bark.status == 200) {
                     if (bark.responseText != null) {
@@ -304,6 +300,7 @@
                     }
                 }
             }
+            // sends a bark answer to the server
             var barkBack;
             function barkBack(dogID, answer) {
                 var a1 = ["dogID", "answer"];
@@ -314,6 +311,7 @@
                 barkBack.addEventListener("readystatechange", barkBackReceived, false);
                 barkBack.send(payload);
             }
+            // callback function for the answer
             function barkBackReceived() {
                 if (barkBack.readyState == 4 && barkBack.status == 200) {
                     if (barkBack.responseText != null) {
@@ -330,16 +328,10 @@
                     }
                 }
             }
-            
-            function logout(){
-                window.open("logout", "_self");
-            }
-            
-        </script>
-        
+        </script>  
     </head>
 
-   <body onload="load('not_friends')">
+    <body onload="load('not_friends')">
 		<div class="sidebar">
             <div style="font-weight: 600; text-align: center">
                 Welcome, <span id="fname">User</span>!
@@ -368,16 +360,14 @@
             <div style="padding-bottom: 5%; text-align: left">
                 <button class="form" style="font-size: .75em" onclick="logout()">Logout</button>
             </div>
-
         </div>
-       
-       <div id="barkrequests" class="theme" style="text-align: left"> 
+        <div id="barkrequests" class="theme" style="text-align: left"> 
             <div style="margin-left: 18%">
                 <span style="font-weight: 700; font-size: 1.5em">Bark Requests:</span> 
                 <span id="nobarks"> </span>
             </div>
-           <div id="RequestsGrid" class="grid-container" style="position: relative"> 
-               <div id="r1" class="grid-item">
+            <div id="RequestsGrid" class="grid-container" style="position: relative"> 
+                <div id="r1" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
                     <br>
                     <span >Name</span>
@@ -385,8 +375,8 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark Back </button>
                     <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="r2" class="grid-item">
+                </div>
+                <div id="r2" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
                     <br>
                     <span >Name</span>
@@ -394,8 +384,8 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark Back </button>
                     <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="r3" class="grid-item">
+                </div>
+                <div id="r3" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
                     <br>
                     <span >Name</span>
@@ -403,31 +393,19 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark Back </button>
                     <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="morerequests" style="position: absolute; left: 1100px; top: 75px;">
+                </div>
+                <div id="morerequests" style="position: absolute; left: 1100px; top: 75px;">
                     <button onclick="moreRequests()" class="form" style="font-size: .75em; width: 150px; height: 50px;  "> View Other Requests </button>
-              </div>
-               
-           </div>
-           
+                </div>
+            </div>
        </div> 
-       
        <div id="suggestedfriends" class="theme" style="text-align: left">
             <div style="margin-left: 18%">
                 <span style="font-weight: 700; font-size: 1.5em">Suggested Friends:</span> 
                 <span id="nosuggestions"> </span>
             </div>
             <div id="SuggestionsGrid" class="grid-container" style="position: relative"> 
-               <div id="s1" class="grid-item">
-                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
-                    <br>
-                    <span >Name</span>
-                    <br>
-                   <button class="form" style="font-size: .6em"> View </button>
-                    <button class="form" style="font-size: .6em"> Bark </button>
-                   <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="s2" class="grid-item">
+                 <div id="s1" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
                     <br>
                     <span >Name</span>
@@ -435,8 +413,8 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark </button>
                     <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="s3" class="grid-item">
+                </div>
+                <div id="s2" class="grid-item">
                     <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
                     <br>
                     <span >Name</span>
@@ -444,14 +422,20 @@
                     <button class="form" style="font-size: .6em"> View </button>
                     <button class="form" style="font-size: .6em"> Bark </button>
                     <button class="form" style="font-size: .6em"> Ignore </button>
-               </div>
-               <div id="moresuggestions" style="position: absolute; left: 1100px; top: 75px; ">
+                </div>
+                <div id="s3" class="grid-item">
+                    <img src="uploads/dog.png" style="padding-left: 10%; width: 100px; height: 100px " > 
+                    <br>
+                    <span >Name</span>
+                    <br>
+                    <button class="form" style="font-size: .6em"> View </button>
+                    <button class="form" style="font-size: .6em"> Bark </button>
+                    <button class="form" style="font-size: .6em"> Ignore </button>
+                </div>
+                <div id="moresuggestions" style="position: absolute; left: 1100px; top: 75px; ">
                     <button onclick="moreSuggestions()" class="form" style="font-size: .75em; width: 150px; height: 75px;  "> View Other Suggested Friends </button>
-              </div>
-               
-           </div>
-       </div>
-       
-	</body>
-
+                </div>
+            </div>
+        </div>  
+    </body>
 </html>

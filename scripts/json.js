@@ -1,12 +1,12 @@
+// takes two arrays (variable names, data) and combines them in a JSON-formatted string
 function formatAsJSON(a1, a2) {
-    //a1 contains variable names, a2 contains corresponding data, lengths must agree
+    // array lengths must agree
     if (a1.length != a2.length) {
         if (console) {
             console.log("The lengths of two arrays sent to formatAsJSON() did not match.");
             return null;
         }
     }
-    //example json: '{"name":"John", "age":31, "city":"New York"}'
     var json = '{';
     var i;
     for (i = 0; i < a1.length; i++) {
@@ -19,9 +19,9 @@ function formatAsJSON(a1, a2) {
     var encrypted = encrypt(json);
     return encrypted;
 }
-
+// key for encryption: the Montreal area code 
 var key = [5, 1, 4];
-
+// block encrypts and inverts a given string
 function encrypt(str) {
     var ciphered = "";
     let j = 0;
@@ -37,7 +37,7 @@ function encrypt(str) {
     }
     return ciphered;
 }
-
+// block decrypts and inverts a given string
 function decrypt(str) {
     var deciphered = "";
     let j = 0;

@@ -7,6 +7,7 @@
         <script src="scripts/json.js"></script>
         <script src="scripts/profile.js"></script>
         <script>
+            // callback function that populates main page HTML on successful authentification
             function requestReceived() {
                 if (request.readyState == 4 && request.status == 200) {
                     if (request.responseText.length < 1) {
@@ -37,7 +38,7 @@
                     }
                 }
             }
-            // dog id, dog name, dog image
+            // adds a grid item containing dog info
             function addBox(id, name, image, i) {
                 var div = document.createElement('div');
                 div.setAttribute('class','grid-item');         
@@ -75,7 +76,7 @@
                 b2.setAttribute("onclick", "return schedule("+id+")"); 
                 div.appendChild(b2);
             }    
-            
+            // sends dog info to a script to display a full dog profile
             function helper(i){
                 var name = data.friends[i].dname; 
                 var age = data.friends[i].age;
@@ -86,16 +87,10 @@
                 var image = data.friends[i].image; 
                 showProfile(name, breed, age, a1, a2, a3, image); 
             }
-             
-            function logout(){
-                window.open("logout", "_self");
-            }
-            
-        </script>
-        
+        </script>  
     </head>
 
-   <body onload="load('friends')">
+    <body onload="load('friends')">
         <div class="sidebar">
             <div style="font-weight: 600; text-align: center">
                 Welcome, <span id="fname">User</span>!
@@ -137,7 +132,5 @@
             <div id="FriendGrid" class="grid-container"> 
             </div>
        </div>
-     
-	</body>
-
+    </body>
 </html>
