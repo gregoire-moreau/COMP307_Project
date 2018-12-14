@@ -18,3 +18,39 @@ function formatAsJSON(a1, a2) {
     json += '}';
     return json;
 }
+
+var key = [5, 1, 4];
+
+function encrypt(var str) {
+    var ciphered = "";
+    let j = 0;
+    for (let i = 0; i < str.length; i++) {
+        var ascii = str.charCodeAt(i);
+        if (j >= key.length) {
+            j = 0;
+        }
+        ascii += key[j];
+        ascii = ascii%127;
+        ciphered = ascii.toString() + ciphered;
+        j++;
+    }
+    return ciphered;
+}
+
+function decrypt(var str) {
+    var deciphered = "";
+    let j = 0;
+    for (let i = str.lentgh-1; i >= 0; i--) {
+        var ascii = str.charCodeAt(i);
+        if (j >= key.length) {
+            j = 0;
+        }
+        ascii -= key[j];
+        while (ascii < 0) {
+            ascii += 127;
+        }
+        deciphered = ascii.toString() + deciphered;
+        j++;
+    }
+    return deciphered;  
+}
