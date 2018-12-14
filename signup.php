@@ -11,37 +11,39 @@ $uNameQuery = "SELECT COUNT(username) FROM users WHERE username = ? ;";
 $emailQuery = "SELECT COUNT(email) FROM users WHERE email = ? ;";
 try{
     $stmt = $GLOBALS["mysqli"]->prepare($uNameQuery);
-    $stmt->bind_param('s', $username);
+    $stmt->bind_param('s', $username);  //Avoid sql injection
     $stmt->execute();
     $uNameResult  = $stmt->get_result();
     $stmt = $GLOBALS["mysqli"]->prepare($emailQuery);
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $emailResult  = $stmt->get_result();
+
     while($row =  $uNameResult->fetch_assoc()){
         $dataUname[] = $row;
     }
-    if($dataUname[0]["COUNT(username)"] != "0"){
+    if($dataUname[0]["COUNT(username)"] != "0"){ //We check to see if the username already exists in the database
         $toRet["status"] = false;
         $toRet["field"] = "username";
         $toRet["errorMessage"] = "This username is already taken.";
-        echo json_encode($toRet);
+        echo encrypt(json_encode($toRet));
         return;
     }
+
     while($row =  $emailResult->fetch_assoc()){
         $dataEmail[] = $row;
     }
-    if($dataEmail[0]["COUNT(email)"] != "0"){
+    if($dataEmail[0]["COUNT(email)"] != "0"){ //We check to see if the email already exists in the database
         $toRet["status"] = false;
         $toRet["field"] = "email";
         $toRet["errorMessage"] = "This email is already taken.";
-        echo json_encode($toRet);
+        echo encrypt(json_encode($toRet));
         return;
     }
     else{
         $insertQuery = "INSERT INTO `users`(`username`, `email`, `password`, `firstName`, `lastName`, `location`) VALUES (?, ?, ?, ?, ?, ?);";
         $stmt = $GLOBALS["mysqli"]->prepare($insertQuery);
-        $stmt->bind_param('ssssss', $username, $email, $hashPass, $firstName, $lastName, $location);
+        $stmt->bind_param('ssssss', $username, $email, $hashPass, $firstName, $lastName, $location); //Avoid sql injection
         $stmt->execute();
         $newUser = true;
     }
@@ -50,5 +52,6 @@ try{
     $toRet["status"] = false;
     $toRet["field"] = "all";
     $toRet["errorMessage"] = "Exception received in php".$e.getMessage();
+    echo encrypt(json_encode($toRet));
     return;
 }

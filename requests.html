@@ -19,7 +19,7 @@
                         }
                         // server response string goes into data
                         var decrypted = decrypt(request.responseText);
-                        data = JSON.parse(decrypt);
+                        data = JSON.parse(decrypted);
                         document.getElementById("fname").innerHTML = data.fname;
                         
                         // display barks from other dogs
@@ -316,7 +316,7 @@
                 if (barkBack.readyState == 4 && barkBack.status == 200) {
                     if (barkBack.responseText != null) {
                         var decrypted = decrypt(barkBack.responseText);
-                        var data = JSON.parse(decrpyted);
+                        var data = JSON.parse(decrypted);
                         if (data.status) {
                             alert("Succesful action!");
                             window.open("requests.html","_self");
