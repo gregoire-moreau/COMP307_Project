@@ -31,7 +31,10 @@ How to run:
     iii. Uncheck the "Enable foreign key checks" options
     iv. Click Go
 5. Access localhost/COMP307_Project with your browser or open CLICKME.html and click on the link
-6. Sign up an account through the link on the Login page (note: most dogs in the DB are in location "Downtown" so to see how our sorting algorithm etc. works it would be best to select this option when testing the site) 
+6. Sign up an account through the link on the Login page 
+	Notes for making an account: 
+	* Most dogs in the DB are in location "Downtown" so to see how our sorting algorithm etc. works it would be best to select this option when 	testing the site 
+	* To explore the full functionality of the site, create two or more accounts so you can log in to both and test the interaction features (See 	below) 
 7. Log in to your account and explore the following functionalities :
 	* Upload a picture of your dog through the profile page
 	* See nearby dogs with similar interests through the suggested friends section of the barks page
