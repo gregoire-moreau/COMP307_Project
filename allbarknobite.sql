@@ -53,8 +53,7 @@ INSERT INTO `dogs` (`ID`, `Name`, `Age`, `owner`, `image`, `breed`, `activity1`,
 (26, 'Lola', 0, 'carter_nick', 'rav0cpw5at.jpg', 'Boxer', 'Running', 'Playing with toys', 'Playing with other dogs'),
 (27, 'Dutch', 7, 'dfuller', 'e26tjzpphm.jpg', 'Chow mix', 'Wrestling', 'Chase', 'Walks'),
 (28, 'Chewy', 5, 'b_choi', 'g608e8517h.jpg', 'Labradoodle', 'Running', 'Playing with toys', 'Playing with other dogs'),
-(29, 'Gordon', 8, 'ddmouth', '14hdrdkswg.jpg', 'Mixed breed', 'Playing with other dogs', 'Running', 'Chase'),
-(30, 'fdsf', 8, 'faz', 'dog.png', 'fsdfs', 'Cuddling', 'Wrestling', 'Cuddling');
+(29, 'Gordon', 8, 'ddmouth', '14hdrdkswg.jpg', 'Mixed breed', 'Playing with other dogs', 'Running', 'Chase');
 
 
 DROP TABLE IF EXISTS `friends`;
@@ -143,7 +142,6 @@ INSERT INTO `users` (`username`, `email`, `password`, `firstName`, `lastName`, `
 ('dfuller', 'df@gmail.com', ':#k.AK,U', 'Diane', 'Fuller', 'Downtown'),
 ('dmorgan', 'dm@gmail.com', ':#k.AK,U', 'Danielle', 'Morgan', 'Downtown'),
 ('fastpaws', 'moira@gpi.com', ':#k.AK,U', 'Moira', 'Corrigan', 'Downtown'),
-('faz', 'fsadfgsgs', '5=m-#-U;', 'faz', 'faz', 'Downtown'),
 ('gill_steve', 'SHG@gmail.com', '-weI{-&U', 'Stephen', 'Gill', 'Downtown'),
 ('jenga', 'jenga@gmail.com', '5C}C}C}-', 'Jen', 'Gahrns', 'Downtown'),
 ('joestymest', 'joesty@gmail.com', '-G-G8-4}', 'Joe', 'Stymest', 'Downtown'),
