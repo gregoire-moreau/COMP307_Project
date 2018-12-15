@@ -22,7 +22,7 @@ NB:
 *Grégoire also added server side security measures to protect against SQL injection, and the server side decryption/encryption.
 
 How to run:
-1. Extract the front-end and back-end files and copy the files into the htdocs folder of your XAMPP installation
+1. Extract the front-end and back-end files and copy the files into a new folder inside the htdocs folder of your XAMPP installation
 2. Configure XAMPP to allow uploads up to 5MB (change line 818 in xampp/php/php.ini to "upload_max_filesize=5M")
 3. Start Apache and MySQL in XAMPP
 4. Import the database :
@@ -30,7 +30,7 @@ How to run:
     ii. Go to Import and browse to the "allbarknobite.sql" file in this folder
     iii. Uncheck the "Enable foreign key checks" options
     iv. Click Go
-5. Access localhost/COMP307_Project with your browser or open CLICKME.html and click on the link
+5. Access localhost/"name of the new folder" with your browser or open CLICKME.html and click on the link
 6. Sign up an account through the link on the Login page 
 	Notes for making an account: 
 	* Most dogs in the DB are in location "Downtown" so to see how our sorting algorithm etc. works it would be best to select this option when 	testing the site 
