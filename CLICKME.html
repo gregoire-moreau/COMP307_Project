@@ -2,8 +2,15 @@
 <html> 
     <head> 
     </head>
-    
-    <body> 
-        <a href="http://127.0.0.1/allbarknobite";>Click here to reach the website</a>
+    <script>
+    function getDomain(){
+        var tab = (document.location.pathname).split('/');
+        var folder = tab[tab.length-2];
+        document.getElementById("link").href = "http://localhost/"+folder;
+    }
+    </script> 
+
+    <body onload="getDomain()"> 
+        <a id="link" href="http://127.0.0.1/allbarknobite";>Click here to reach the website</a>
     </body>
 </html>
